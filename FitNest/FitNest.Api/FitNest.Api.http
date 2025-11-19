@@ -1,0 +1,6 @@
+@FitNest.Api_HostAddress = http://localhost:5032
+
+GET {{FitNest.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

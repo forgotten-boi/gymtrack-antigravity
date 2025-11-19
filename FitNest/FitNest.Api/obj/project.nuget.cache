@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "EZcT5+cP+NY=",
+  "success": true,
+  "projectFilePath": "C:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Api\\FitNest.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

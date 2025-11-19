@@ -1,0 +1,12 @@
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\bin\Debug\net10.0\GymTracker.ServiceDefaults.deps.json
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\bin\Debug\net10.0\GymTracker.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\bin\Debug\net10.0\GymTracker.ServiceDefaults.pdb
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.csproj.AssemblyReference.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.AssemblyInfoInputs.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.AssemblyInfo.cs
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.csproj.CoreCompileInputs.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\refint\GymTracker.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\GymTracker.ServiceDefaults.pdb
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\GymTracker.ServiceDefaults\obj\Debug\net10.0\ref\GymTracker.ServiceDefaults.dll

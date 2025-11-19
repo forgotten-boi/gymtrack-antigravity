@@ -1,0 +1,16 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.0.0">
+
+  <ItemGroup>
+    <ProjectReference Include="..\GymTracker.ApiService\GymTracker.ApiService.csproj" />
+    <ProjectReference Include="..\GymTracker.Web\GymTracker.Web.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>e7fcd2aa-d26f-4ae8-8eed-1c8b01febe51</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

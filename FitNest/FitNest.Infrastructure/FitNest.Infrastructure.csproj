@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitNest.Application\FitNest.Application.csproj" />
+    <ProjectReference Include="..\FitNest.Domain\FitNest.Domain.csproj" />
+    <ProjectReference Include="..\FitNest.ServiceDefaults\FitNest.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
