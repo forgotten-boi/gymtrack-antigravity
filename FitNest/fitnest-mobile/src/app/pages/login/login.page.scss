@@ -1,0 +1,130 @@
+.login-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+
+  .logo-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+  }
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+
+  .input-item {
+    --background: #f5f5f5;
+    --border-radius: 12px;
+    margin-bottom: 1rem;
+    --padding-start: 1rem;
+
+    ion-icon {
+      color: #667eea;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .login-button {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --border-radius: 12px;
+    height: 50px;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    text-transform: none;
+    font-size: 1rem;
+  }
+
+  .divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ddd;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+
+    span {
+      background: white;
+      padding: 0 1rem;
+      color: #999;
+      font-size: 0.9rem;
+    }
+  }
+
+  .google-button {
+    --border-color: #ddd;
+    --border-width: 2px;
+    --border-radius: 12px;
+    --color: #333;
+    height: 50px;
+    font-weight: 600;
+    text-transform: none;
+    font-size: 1rem;
+
+    ion-icon {
+      color: #ea4335;
+    }
+  }
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: white;
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: white;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}

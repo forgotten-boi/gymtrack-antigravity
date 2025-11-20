@@ -62,10 +62,18 @@
               "version": "[13.0.0, )",
               "autoReferenced": true
             },
+            "Aspire.Hosting.NodeJs": {
+              "target": "Package",
+              "version": "[9.5.2, )"
+            },
             "Aspire.Hosting.Orchestration.win-x64": {
               "target": "Package",
               "version": "[13.0.0, )",
               "autoReferenced": true
+            },
+            "Aspire.Hosting.PostgreSQL": {
+              "target": "Package",
+              "version": "[13.0.0, )"
             }
           },
           "imports": [

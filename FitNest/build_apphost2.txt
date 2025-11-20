@@ -1,0 +1,15 @@
+  Determining projects to restore...
+  Restored C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj (in 3.13 sec).
+  5 of 6 projects are up-to-date for restore.
+  FitNest.Domain -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Domain\bin\Debug\net10.0\FitNest.Domain.dll
+  FitNest.Application -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Application\bin\Debug\net10.0\FitNest.Application.dll
+  FitNest.ServiceDefaults -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.dll
+  FitNest.Infrastructure -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Infrastructure\bin\Debug\net10.0\FitNest.Infrastructure.dll
+  FitNest.Api -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\FitNest.Api.dll
+  FitNest.AppHost -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\bin\Debug\net10.0\FitNest.AppHost.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:18.01

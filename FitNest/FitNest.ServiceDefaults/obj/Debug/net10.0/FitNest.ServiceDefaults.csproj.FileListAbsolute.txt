@@ -1,0 +1,13 @@
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.deps.json
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.pdb
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.csproj.AssemblyReference.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.AssemblyInfoInputs.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.AssemblyInfo.cs
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.csproj.CoreCompileInputs.cache
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.sourcelink.json
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\refint\FitNest.ServiceDefaults.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\FitNest.ServiceDefaults.pdb
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\obj\Debug\net10.0\ref\FitNest.ServiceDefaults.dll

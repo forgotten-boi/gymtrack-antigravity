@@ -1,0 +1,52 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    <!-- Logo/Header -->
+    <div class="header">
+      <ion-icon name="fitness" class="logo-icon"></ion-icon>
+      <h1>FitNest</h1>
+      <p class="subtitle">Track Your Fitness Journey</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form">
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          autocomplete="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          autocomplete="current-password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="login-button" (click)="loginWithEmail()">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        Sign In
+      </ion-button>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <ion-button expand="block" fill="outline" class="google-button" (click)="loginWithGoogle()">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Continue with Google
+      </ion-button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Don't have an account? <a href="#">Sign Up</a></p>
+    </div>
+  </div>
+</ion-content>

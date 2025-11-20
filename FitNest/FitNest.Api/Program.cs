@@ -1,7 +1,18 @@
+using FitNest.Application;
+using FitNest.Infrastructure;
+using FitNest.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.AddServiceDefaults();
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+// Add Aspire Npgsql client
+builder.AddNpgsqlDbContext<ApplicationDbContext>("fitnest-db");
+
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -13,6 +24,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 var summaries = new[]
 {

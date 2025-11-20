@@ -1,8 +1,29 @@
 {
   "version": 2,
-  "dgSpecHash": "mBFDW09A2KE=",
+  "dgSpecHash": "+vnbLPvRkAE=",
   "success": true,
   "projectFilePath": "C:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Application\\FitNest.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pjha\\.nuget\\packages\\automapper\\15.1.0\\automapper.15.1.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\fluentvalidation\\12.1.0\\fluentvalidation.12.1.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.0\\fluentvalidation.dependencyinjectionextensions.12.1.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.0\\microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.0\\microsoft.entityframeworkcore.analyzers.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.0\\microsoft.extensions.caching.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.0\\microsoft.extensions.caching.memory.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0\\microsoft.extensions.dependencyinjection.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.dependencymodel\\8.0.2\\microsoft.extensions.dependencymodel.8.0.2.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0\\microsoft.extensions.logging.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0\\microsoft.extensions.logging.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.options\\9.0.0\\microsoft.extensions.options.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.0\\microsoft.extensions.primitives.9.0.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.14.0\\microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.14.0\\microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.identitymodel.logging\\8.14.0\\microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.14.0\\microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
+    "C:\\Users\\pjha\\.nuget\\packages\\scrutor\\6.1.0\\scrutor.6.1.0.nupkg.sha512"
+  ],
   "logs": []
 }

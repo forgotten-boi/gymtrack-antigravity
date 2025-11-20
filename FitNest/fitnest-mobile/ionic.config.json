@@ -1,5 +1,7 @@
 {
-  "name": "ionic-app-base",
-  "integrations": {},
+  "name": "fitnest-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

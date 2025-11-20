@@ -1,0 +1,15 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  FitNest.Domain -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Domain\bin\Debug\net10.0\FitNest.Domain.dll
+  FitNest.ServiceDefaults -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.dll
+  FitNest.Application -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Application\bin\Debug\net10.0\FitNest.Application.dll
+  FitNest.Infrastructure -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Infrastructure\bin\Debug\net10.0\FitNest.Infrastructure.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\Program.cs(13,9): error CS1061: 'WebApplicationBuilder' does not contain a definition for 'AddNpgsqlDbContext' and no accessible extension method 'AddNpgsqlDbContext' accepting a first argument of type 'WebApplicationBuilder' could be found (are you missing a using directive or an assembly reference?) [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\FitNest.Api.csproj]
+
+Build FAILED.
+
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\Program.cs(13,9): error CS1061: 'WebApplicationBuilder' does not contain a definition for 'AddNpgsqlDbContext' and no accessible extension method 'AddNpgsqlDbContext' accepting a first argument of type 'WebApplicationBuilder' could be found (are you missing a using directive or an assembly reference?) [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\FitNest.Api.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:21.05

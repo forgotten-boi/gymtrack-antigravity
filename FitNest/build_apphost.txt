@@ -1,0 +1,20 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  FitNest.Domain -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Domain\bin\Debug\net10.0\FitNest.Domain.dll
+  FitNest.Application -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Application\bin\Debug\net10.0\FitNest.Application.dll
+  FitNest.ServiceDefaults -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.ServiceDefaults\bin\Debug\net10.0\FitNest.ServiceDefaults.dll
+  FitNest.Infrastructure -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Infrastructure\bin\Debug\net10.0\FitNest.Infrastructure.dll
+  FitNest.Api -> C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\FitNest.Api.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(3,24): error CS1061: 'IDistributedApplicationBuilder' does not contain a definition for 'AddPostgres' and no accessible extension method 'AddPostgres' accepting a first argument of type 'IDistributedApplicationBuilder' could be found (are you missing a using directive or an assembly reference?) [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(16,20): error CS1503: Argument 2: cannot convert from 'Aspire.Hosting.ApplicationModel.IResourceBuilder<T>' to 'Aspire.Hosting.ApplicationModel.IResourceBuilder<Aspire.Hosting.ApplicationModel.IResourceWithConnectionString>' [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(23,20): error CS1503: Argument 2: cannot convert from 'Aspire.Hosting.ApplicationModel.IResourceBuilder<T>' to 'Aspire.Hosting.ApplicationModel.IResourceBuilder<Aspire.Hosting.ApplicationModel.IResourceWithConnectionString>' [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+
+Build FAILED.
+
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(3,24): error CS1061: 'IDistributedApplicationBuilder' does not contain a definition for 'AddPostgres' and no accessible extension method 'AddPostgres' accepting a first argument of type 'IDistributedApplicationBuilder' could be found (are you missing a using directive or an assembly reference?) [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(16,20): error CS1503: Argument 2: cannot convert from 'Aspire.Hosting.ApplicationModel.IResourceBuilder<T>' to 'Aspire.Hosting.ApplicationModel.IResourceBuilder<Aspire.Hosting.ApplicationModel.IResourceWithConnectionString>' [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\Program.cs(23,20): error CS1503: Argument 2: cannot convert from 'Aspire.Hosting.ApplicationModel.IResourceBuilder<T>' to 'Aspire.Hosting.ApplicationModel.IResourceBuilder<Aspire.Hosting.ApplicationModel.IResourceWithConnectionString>' [C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.AppHost\FitNest.AppHost.csproj]
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:16.53
