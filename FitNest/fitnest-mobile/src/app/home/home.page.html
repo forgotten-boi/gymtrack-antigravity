@@ -1,12 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>FitNest Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/notifications">
+        <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/chat">
+        <ion-icon name="chatbubble-ellipses-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/profile">
+        <ion-icon name="person-circle-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding">
+  <!-- Progress Summary Card -->
+  <div class="progress-card" routerLink="/progress">
+    <div class="card-content">
+      <h2>Weekly Progress</h2>
+      <p>3/5 Workouts Completed</p>
+      <ion-progress-bar value="0.6"></ion-progress-bar>
+    </div>
+    <ion-icon name="chevron-forward"></ion-icon>
+  </div>
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
@@ -15,6 +33,7 @@
 
   <div id="container">
     <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer"
+        href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
 </ion-content>

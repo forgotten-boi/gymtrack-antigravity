@@ -1,0 +1,124 @@
+.chat-widget {
+    position: fixed;
+    bottom: 0;
+    right: 2rem;
+    width: 320px;
+    background: white;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    transform: translateY(calc(100% - 60px));
+
+    &.open {
+        transform: translateY(0);
+    }
+}
+
+.chat-header {
+    padding: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+
+    .header-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+    }
+}
+
+.chat-body {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-list {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #f7fafc;
+}
+
+.message {
+    max-width: 80%;
+    align-self: flex-start;
+
+    &.coach {
+        align-self: flex-end;
+
+        .msg-content {
+            background: #667eea;
+            color: white;
+            border-radius: 12px 12px 0 12px;
+        }
+
+        .msg-time {
+            text-align: right;
+        }
+    }
+
+    &:not(.coach) {
+        .msg-content {
+            background: white;
+            color: #2d3748;
+            border-radius: 12px 12px 12px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .msg-content {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .msg-time {
+        font-size: 0.7rem;
+        color: #a0aec0;
+        margin-top: 0.25rem;
+        padding: 0 0.25rem;
+    }
+}
+
+.chat-input {
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.5rem;
+
+    input {
+        flex: 1;
+        padding: 0.5rem 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        outline: none;
+
+        &:focus {
+            border-color: #667eea;
+        }
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: #667eea;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 0 0.5rem;
+
+        &:hover {
+            color: #764ba2;
+        }
+    }
+}

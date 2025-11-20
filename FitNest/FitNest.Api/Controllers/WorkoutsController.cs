@@ -39,4 +39,18 @@ public class WorkoutsController : ControllerBase
             
         return Ok(result.Data);
     }
+
+    [HttpPost("{id}/verify")]
+    public async Task<IActionResult> Verify(Guid id, VerifyWorkoutCommand command)
+    {
+        if (id != command.WorkoutId)
+            return BadRequest("Workout ID mismatch");
+
+        var result = await _dispatcher.Send(command);
+        
+        if (!result)
+            return NotFound();
+            
+        return NoContent();
+    }
 }

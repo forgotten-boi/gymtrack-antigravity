@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>My Profile</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="logout()" color="danger">
+                <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="profile-header">
+        <div class="avatar">
+            {{ user.firstName?.charAt(0) }}{{ user.lastName?.charAt(0) }}
+        </div>
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <p>{{ user.email }}</p>
+    </div>
+
+    <div class="profile-form">
+        <ion-item>
+            <ion-label position="stacked">First Name</ion-label>
+            <ion-input [(ngModel)]="user.firstName" [readonly]="!isEditing"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Last Name</ion-label>
+            <ion-input [(ngModel)]="user.lastName" [readonly]="!isEditing"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input [(ngModel)]="user.email" readonly color="medium"></ion-input>
+        </ion-item>
+    </div>
+
+    <div class="actions">
+        <ion-button expand="block" *ngIf="!isEditing" (click)="toggleEdit()">
+            Edit Profile
+        </ion-button>
+
+        <div class="edit-actions" *ngIf="isEditing">
+            <ion-button expand="block" color="medium" (click)="toggleEdit()">
+                Cancel
+            </ion-button>
+            <ion-button expand="block" (click)="saveProfile()">
+                Save Changes
+            </ion-button>
+        </div>
+    </div>
+</ion-content>

@@ -14,6 +14,7 @@ export class WorkoutCapturePage {
     capturedImage: string | undefined;
     exercises: Exercise[] = [];
     isAnalyzing = false;
+    workoutDate: string = new Date().toISOString();
 
     constructor(
         private apiService: ApiService,
@@ -84,8 +85,8 @@ export class WorkoutCapturePage {
             const workout: Workout = {
                 userId: user.id,
                 tenantId: user.tenantId,
-                workoutDate: new Date(),
-                imageUrl: this.capturedImage, // Ideally upload to storage first and get URL
+                workoutDate: new Date(this.workoutDate),
+                imageUrl: this.capturedImage,
                 status: 'PendingVerification',
                 exercises: this.exercises
             };

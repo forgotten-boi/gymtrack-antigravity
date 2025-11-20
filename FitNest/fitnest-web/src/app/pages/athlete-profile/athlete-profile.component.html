@@ -1,0 +1,41 @@
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-info">
+            <div class="avatar">{{athlete.name.charAt(0)}}</div>
+            <div>
+                <h1>{{athlete.name}}</h1>
+                <p>{{athlete.email}} • Joined {{athlete.joinDate | date}}</p>
+            </div>
+        </div>
+        <div class="status-badge" [class.active]="athlete.status === 'Active'">
+            {{athlete.status}}
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="card goals-card">
+            <h2>Current Goals</h2>
+            <ul>
+                <li *ngFor="let goal of athlete.goals">
+                    <i class="fas fa-check-circle"></i>
+                    {{goal}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="card history-card">
+            <h2>Workout History</h2>
+            <div class="history-list">
+                <div class="history-item" *ngFor="let workout of athlete.recentWorkouts">
+                    <div class="workout-date">{{workout.date | date:'MMM d'}}</div>
+                    <div class="workout-name">{{workout.name}}</div>
+                    <div class="workout-status" [class.completed]="workout.status === 'Completed'">
+                        {{workout.status}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-chat-widget [athleteId]="athlete.id" [athleteName]="athlete.name"></app-chat-widget>
+</div>

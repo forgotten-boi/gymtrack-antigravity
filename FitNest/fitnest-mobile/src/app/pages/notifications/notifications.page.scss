@@ -1,0 +1,78 @@
+ion-content {
+    --background: #f7f9fc;
+}
+
+ion-list {
+    background: transparent;
+    padding: 0;
+}
+
+.notif-item {
+    --background: white;
+    --padding-start: 0;
+    --inner-padding-end: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    &.unread {
+        --background: #fff;
+
+        h3 {
+            font-weight: 700;
+        }
+    }
+
+    .status-indicator {
+        width: 6px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        &.success {
+            background: #48bb78;
+        }
+
+        &.primary {
+            background: #667eea;
+        }
+
+        &.warning {
+            background: #ecc94b;
+        }
+    }
+
+    ion-label {
+        margin-left: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        h3 {
+            font-size: 1rem;
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        p {
+            color: #718096;
+            font-size: 0.9rem;
+            white-space: normal;
+        }
+
+        .time {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .unread-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #667eea;
+        margin-left: 0.5rem;
+    }
+}

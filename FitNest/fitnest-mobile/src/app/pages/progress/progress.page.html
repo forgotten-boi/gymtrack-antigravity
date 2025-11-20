@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>My Progress</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{stats.workoutsCompleted}}</div>
+            <div class="stat-label">Workouts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{stats.streakDays}}</div>
+            <div class="stat-label">Day Streak</div>
+        </div>
+        <div class="stat-card full-width">
+            <div class="stat-value">{{stats.totalWeightLifted | number}} kg</div>
+            <div class="stat-label">Total Volume</div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Personal Records</h2>
+    </div>
+
+    <ion-list class="pr-list">
+        <ion-item *ngFor="let pr of prs" lines="none">
+            <ion-icon name="trophy" slot="start" color="warning"></ion-icon>
+            <ion-label>
+                <h3>{{pr.exercise}}</h3>
+                <p>{{pr.date | date:'mediumDate'}}</p>
+            </ion-label>
+            <div class="pr-weight">
+                {{pr.weight}} <small>{{pr.unit}}</small>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

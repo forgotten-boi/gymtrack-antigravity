@@ -19,6 +19,22 @@ const routes: Routes = [
     path: 'workout-capture',
     loadChildren: () => import('./pages/workout-capture/workout-capture.module').then(m => m.WorkoutCapturePageModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
+  },
+  {
+    path: 'progress',
+    loadChildren: () => import('./pages/progress/progress.module').then(m => m.ProgressPageModule)
+  },
+  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+  },
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     public DbSet<Workout> Workouts { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Feedback> Feedbacks { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -61,6 +62,13 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
                 .WithMany(u => u.ReceivedFeedback)
                 .HasForeignKey(f => f.ToMemberId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Configure Message
+        builder.Entity<Message>(entity =>
+        {
+            entity.HasIndex(m => m.SenderId);
+            entity.HasIndex(m => m.ReceiverId);
         });
     }
 }

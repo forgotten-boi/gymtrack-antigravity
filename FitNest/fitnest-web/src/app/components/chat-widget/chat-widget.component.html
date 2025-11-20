@@ -1,0 +1,26 @@
+<div class="chat-widget" [class.open]="isOpen">
+    <div class="chat-header" (click)="toggleChat()">
+        <div class="header-info">
+            <i class="fas fa-comments"></i>
+            <span>Chat with {{athleteName}}</span>
+        </div>
+        <i class="fas fa-chevron-up" *ngIf="!isOpen"></i>
+        <i class="fas fa-chevron-down" *ngIf="isOpen"></i>
+    </div>
+
+    <div class="chat-body" *ngIf="isOpen">
+        <div class="messages-list">
+            <div class="message" *ngFor="let msg of messages" [class.coach]="msg.sender === 'coach'">
+                <div class="msg-content">{{msg.content}}</div>
+                <div class="msg-time">{{msg.time | date:'shortTime'}}</div>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" placeholder="Type a message..." [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+            <button (click)="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>

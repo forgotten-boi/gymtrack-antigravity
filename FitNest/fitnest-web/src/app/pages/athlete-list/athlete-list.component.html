@@ -1,0 +1,23 @@
+<div class="list-container">
+    <div class="header">
+        <h1>Athletes</h1>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search athletes..." [(ngModel)]="searchTerm" (input)="filterAthletes()">
+        </div>
+    </div>
+
+    <div class="athlete-grid">
+        <div class="athlete-card" *ngFor="let athlete of filteredAthletes" [routerLink]="['/athlete', athlete.id]">
+            <div class="card-header">
+                <div class="avatar">{{athlete.avatar}}</div>
+                <div class="status-dot" [class.active]="athlete.status === 'Active'"></div>
+            </div>
+            <h3>{{athlete.name}}</h3>
+            <p class="last-workout">Last Workout: {{athlete.lastWorkout | date:'MMM d'}}</p>
+            <div class="card-footer">
+                <span class="view-profile">View Profile <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+</div>

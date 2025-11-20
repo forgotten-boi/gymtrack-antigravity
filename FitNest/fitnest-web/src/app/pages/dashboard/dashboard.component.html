@@ -1,0 +1,63 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div>
+      <h1>Welcome back, Coach!</h1>
+      <p>Here's what's happening with your athletes today.</p>
+    </div>
+    <button class="btn-primary">
+      <i class="fas fa-plus"></i> New Athlete
+    </button>
+  </header>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats" [class.alert]="stat.alert">
+      <div class="stat-icon">
+        <i class="fas fa-{{stat.icon}}"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{stat.title}}</h3>
+        <div class="stat-value">{{stat.value}}</div>
+        <div class="stat-change">{{stat.change}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <!-- Recent Activity -->
+    <div class="card activity-card">
+      <div class="card-header">
+        <h2>Recent Activity</h2>
+        <a href="#" class="view-all">View All</a>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let item of recentActivity">
+          <div class="activity-avatar">{{item.user.charAt(0)}}</div>
+          <div class="activity-details">
+            <span class="user-name">{{item.user}}</span>
+            <span class="action-text">{{item.action}}</span>
+            <div class="time-text">{{item.time}}</div>
+          </div>
+          <div class="activity-type">
+            <i class="fas fa-dumbbell" *ngIf="item.type === 'workout'"></i>
+            <i class="fas fa-clipboard-check" *ngIf="item.type === 'checkin'"></i>
+            <i class="fas fa-bullseye" *ngIf="item.type === 'goal'"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Reviews -->
+    <div class="card pending-card">
+      <div class="card-header">
+        <h2>Pending Reviews</h2>
+        <span class="badge">8</span>
+      </div>
+      <div class="empty-state">
+        <i class="fas fa-check-double"></i>
+        <p>You have 8 workouts waiting for review.</p>
+        <button class="btn-secondary">Start Reviewing</button>
+      </div>
+    </div>
+  </div>
+</div>
