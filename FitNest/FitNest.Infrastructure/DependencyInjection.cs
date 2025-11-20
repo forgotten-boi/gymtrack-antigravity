@@ -13,12 +13,18 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
+        services.AddScoped<Persistence.Interceptors.OutboxInterceptor>();
+
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            options.UseNpgsql(connectionString);
+            var interceptor = sp.GetRequiredService<Persistence.Interceptors.OutboxInterceptor>();
+            options.UseNpgsql(connectionString)
+                   .AddInterceptors(interceptor);
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        
+        services.AddHostedService<BackgroundJobs.ProcessOutboxMessagesJob>();
 
         services.AddIdentityCore<IdentityUser>()
             .AddRoles<IdentityRole>()

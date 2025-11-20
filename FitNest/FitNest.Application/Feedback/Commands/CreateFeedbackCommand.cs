@@ -1,11 +1,12 @@
 using FitNest.Domain.Entities;
-using MediatR;
+using FitNest.Application.Common.CQRS;
+using FitNest.Domain.Interfaces;
 
 namespace FitNest.Application.Feedback.Commands;
 
-public record CreateFeedbackCommand(Guid WorkoutId, Guid CoachId, Guid MemberId, string Content, int? Rating) : IRequest<Guid>;
+public record CreateFeedbackCommand(Guid WorkoutId, Guid CoachId, Guid MemberId, string Content, int? Rating) : ICommand<Guid>;
 
-public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackCommand, Guid>
+public class CreateFeedbackCommandHandler : ICommandHandler<CreateFeedbackCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
 
@@ -23,7 +24,7 @@ public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackComman
             ToMemberId = request.MemberId,
             Content = request.Content,
             Rating = request.Rating,
-            Timestamp = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow
         };
 
         _context.Feedbacks.Add(feedback);

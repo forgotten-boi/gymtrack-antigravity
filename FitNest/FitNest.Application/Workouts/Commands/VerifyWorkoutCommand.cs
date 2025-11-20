@@ -1,12 +1,13 @@
 using FitNest.Domain.Enums;
-using MediatR;
+using FitNest.Application.Common.CQRS;
 using Microsoft.EntityFrameworkCore;
+using FitNest.Domain.Interfaces;
 
 namespace FitNest.Application.Workouts.Commands;
 
-public record VerifyWorkoutCommand(Guid WorkoutId, Guid CoachId, bool IsVerified, string? Notes) : IRequest<bool>;
+public record VerifyWorkoutCommand(Guid WorkoutId, Guid CoachId, bool IsVerified, string? Notes) : ICommand<bool>;
 
-public class VerifyWorkoutCommandHandler : IRequestHandler<VerifyWorkoutCommand, bool>
+public class VerifyWorkoutCommandHandler : ICommandHandler<VerifyWorkoutCommand, bool>
 {
     private readonly IApplicationDbContext _context;
 

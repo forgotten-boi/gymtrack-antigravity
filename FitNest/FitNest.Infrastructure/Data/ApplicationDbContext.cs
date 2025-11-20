@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     public DbSet<Exercise> Exercises { get; set; }
     public DbSet<Feedback> Feedbacks { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

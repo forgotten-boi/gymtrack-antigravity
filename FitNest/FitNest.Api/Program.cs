@@ -10,6 +10,16 @@ builder.AddServiceDefaults();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+// Image Service Registration
+if (builder.Configuration.GetValue<bool>("UseAzureStorage"))
+{
+    builder.Services.AddScoped<FitNest.Application.Common.Interfaces.IImageService, FitNest.Infrastructure.Services.AzureBlobImageService>();
+}
+else
+{
+    builder.Services.AddScoped<FitNest.Application.Common.Interfaces.IImageService, FitNest.Infrastructure.Services.Base64ImageService>();
+}
+
 // Add Aspire Npgsql client
 builder.AddNpgsqlDbContext<ApplicationDbContext>("fitnest-db");
 

@@ -19,7 +19,9 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetProfile(string id)
     {
-        var user = await _context.AppUsers.FindAsync(id);
+        if (!Guid.TryParse(id, out var userId)) return BadRequest();
+        
+        var user = await _context.AppUsers.FindAsync(userId);
         if (user == null) return NotFound();
         return Ok(user);
     }
@@ -27,9 +29,10 @@ public class UsersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProfile(string id, User user)
     {
-        if (id != user.Id) return BadRequest();
+        if (!Guid.TryParse(id, out var userId)) return BadRequest();
+        if (userId != user.Id) return BadRequest();
 
-        var existingUser = await _context.AppUsers.FindAsync(id);
+        var existingUser = await _context.AppUsers.FindAsync(userId);
         if (existingUser == null) return NotFound();
 
         existingUser.FirstName = user.FirstName;
