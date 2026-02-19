@@ -42,4 +42,37 @@ public class UsersController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
+    [HttpGet("athletes")]
+    public async Task<ActionResult<List<User>>> GetAthletes([FromQuery] Guid tenantId)
+    {
+        // In a real app, filter by tenant/gym
+        // For now, return all users who are not coaches (assuming Role property exists or just all users)
+        var athletes = await _context.AppUsers.ToListAsync();
+        return Ok(athletes);
+    }
+
+    [HttpGet("{id}/stats")]
+    public IActionResult GetStats(string id)
+    {
+        // Mock implementation
+        return Ok(new
+        {
+            WorkoutsCompleted = 42,
+            TotalWeightLifted = 15000,
+            StreakDays = 5
+        });
+    }
+
+    [HttpGet("{id}/prs")]
+    public IActionResult GetPRs(string id)
+    {
+        // Mock implementation
+        return Ok(new[]
+        {
+            new { Exercise = "Bench Press", Weight = 100, Unit = "kg", Date = DateTime.UtcNow.AddDays(-10) },
+            new { Exercise = "Squat", Weight = 140, Unit = "kg", Date = DateTime.UtcNow.AddDays(-5) },
+            new { Exercise = "Deadlift", Weight = 180, Unit = "kg", Date = DateTime.UtcNow.AddDays(-2) }
+        });
+    }
 }

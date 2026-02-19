@@ -1,73 +1,78 @@
 <div class="detail-container">
-    <div class="header">
-        <div>
-            <h1>Workout Details</h1>
-            <p>{{workout.athleteName}} • {{workout.date | date:'medium'}}</p>
-        </div>
-        <div class="status-badge" [ngClass]="workout.status.toLowerCase()">
-            {{workout.status}}
-        </div>
-    </div>
+    <app-loading *ngIf="isLoading"></app-loading>
 
-    <div class="content-grid">
-        <div class="left-col">
-            <div class="card image-card" *ngIf="workout.imageUrl">
-                <img [src]="workout.imageUrl" alt="Workout Log">
+    <ng-container *ngIf="!isLoading && workout">
+        <div class="header">
+            <div>
+                <h1>Workout Details</h1>
+                <p>{{workout.athleteName}} • {{workout.date | date:'medium'}}</p>
             </div>
+            <div class="status-badge" [ngClass]="workout.status.toLowerCase()">
+                {{workout.status}}
+            </div>
+        </div>
 
-            <div class="card exercises-card">
-                <h2>Exercises</h2>
-                <div class="exercise-list">
-                    <div class="exercise-item" *ngFor="let ex of workout.exercises">
-                        <div class="ex-name">{{ex.name}}</div>
-                        <div class="ex-stats">{{ex.sets}} x {{ex.reps}} @ {{ex.weight}}{{ex.unit}}</div>
-                    </div>
+        <div class="content-grid">
+            <div class="left-col">
+                <div class="card image-card" *ngIf="workout.imageUrl">
+                    <img [src]="workout.imageUrl" alt="Workout Log">
                 </div>
-            </div>
-        </div>
 
-        <div class="right-col">
-            <div class="card actions-card" *ngIf="workout.status === 'PendingVerification'">
-                <h2>Verification</h2>
-                <p>Review the workout log and verify its authenticity.</p>
-                <div class="action-buttons">
-                    <button class="btn-reject" (click)="rejectWorkout()">Reject</button>
-                    <button class="btn-verify" (click)="verifyWorkout()">Verify Workout</button>
-                </div>
-            </div>
-
-            <div class="card feedback-card">
-                <h2>Feedback</h2>
-
-                <div class="feedback-list">
-                    <div class="feedback-item" *ngFor="let fb of workout.feedback">
-                        <div class="fb-header">
-                            <span class="coach-name">{{fb.coachName}}</span>
-                            <span class="fb-date">{{fb.timestamp | date:'short'}}</span>
-                        </div>
-                        <div class="fb-content">{{fb.content}}</div>
-                        <div class="fb-rating">
-                            <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]" [class.active]="s <= fb.rating"></i>
+                <div class="card exercises-card">
+                    <h2>Exercises</h2>
+                    <div class="exercise-list">
+                        <div class="exercise-item" *ngFor="let ex of workout.exercises">
+                            <div class="ex-name">{{ex.name}}</div>
+                            <div class="ex-stats">{{ex.sets}} x {{ex.reps}} @ {{ex.weight}}{{ex.unit}}</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="add-feedback">
-                    <h3>Add Feedback</h3>
-                    <textarea [(ngModel)]="feedbackContent" placeholder="Write your feedback here..."></textarea>
-                    <div class="rating-select">
-                        <span>Rating:</span>
-                        <select [(ngModel)]="feedbackRating">
-                            <option [value]="5">5 Stars</option>
-                            <option [value]="4">4 Stars</option>
-                            <option [value]="3">3 Stars</option>
-                            <option [value]="2">2 Stars</option>
-                            <option [value]="1">1 Star</option>
-                        </select>
+            <div class="right-col">
+                <div class="card actions-card" *ngIf="workout.status === 'PendingVerification'">
+                    <h2>Verification</h2>
+                    <p>Review the workout log and verify its authenticity.</p>
+                    <div class="action-buttons">
+                        <button class="btn-reject" (click)="rejectWorkout()">Reject</button>
+                        <button class="btn-verify" (click)="verifyWorkout()">Verify Workout</button>
                     </div>
-                    <button class="btn-submit" (click)="submitFeedback()">Send Feedback</button>
+                </div>
+
+                <div class="card feedback-card">
+                    <h2>Feedback</h2>
+
+                    <div class="feedback-list">
+                        <div class="feedback-item" *ngFor="let fb of workout.feedback">
+                            <div class="fb-header">
+                                <span class="coach-name">{{fb.coachName}}</span>
+                                <span class="fb-date">{{fb.timestamp | date:'short'}}</span>
+                            </div>
+                            <div class="fb-content">{{fb.content}}</div>
+                            <div class="fb-rating">
+                                <i class="fas fa-star" *ngFor="let s of [1,2,3,4,5]"
+                                    [class.active]="s <= fb.rating"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-feedback">
+                        <h3>Add Feedback</h3>
+                        <textarea [(ngModel)]="feedbackContent" placeholder="Write your feedback here..."></textarea>
+                        <div class="rating-select">
+                            <span>Rating:</span>
+                            <select [(ngModel)]="feedbackRating">
+                                <option [value]="5">5 Stars</option>
+                                <option [value]="4">4 Stars</option>
+                                <option [value]="3">3 Stars</option>
+                                <option [value]="2">2 Stars</option>
+                                <option [value]="1">1 Star</option>
+                            </select>
+                        </div>
+                        <button class="btn-submit" (click)="submitFeedback()">Send Feedback</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 </div>

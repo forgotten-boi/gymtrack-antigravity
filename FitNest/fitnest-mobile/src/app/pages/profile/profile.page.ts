@@ -19,26 +19,30 @@ export class ProfilePage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.user = { ...this.authService.currentUserValue };
+        // TODO: Get actual userId from auth service
+        const userId = 'user1';
+        this.apiService.getUserProfile(userId).subscribe(user => {
+            this.user = user;
+        });
     }
 
     toggleEdit() {
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
             // Reset to original if cancelled
-            this.user = { ...this.authService.currentUserValue };
+            const userId = 'user1';
+            this.apiService.getUserProfile(userId).subscribe(user => {
+                this.user = user;
+            });
         }
     }
 
     async saveProfile() {
         try {
-            // TODO: Call API to update profile
-            // await this.apiService.updateProfile(this.user).toPromise();
+            const userId = 'user1';
+            await this.apiService.updateProfile(userId, this.user).toPromise();
 
-            // Mock success
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Update local user state
+            // Update local user state if needed
             // this.authService.updateUser(this.user);
 
             this.isEditing = false;

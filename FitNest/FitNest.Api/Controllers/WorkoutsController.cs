@@ -40,6 +40,18 @@ public class WorkoutsController : ControllerBase
         return Ok(result.Data);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var query = new GetWorkoutByIdQuery { Id = id };
+        var result = await _dispatcher.Send(query);
+
+        if (!result.IsSuccess)
+            return NotFound(result.Errors);
+
+        return Ok(result.Data);
+    }
+
     [HttpPost("{id}/verify")]
     public async Task<IActionResult> Verify(Guid id, VerifyWorkoutCommand command)
     {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
     selector: 'app-progress',
@@ -6,20 +7,26 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./progress.page.scss'],
 })
 export class ProgressPage implements OnInit {
-    stats = {
-        workoutsCompleted: 42,
-        totalWeightLifted: 15400, // kg
-        streakDays: 5
+    stats: any = {
+        workoutsCompleted: 0,
+        totalWeightLifted: 0,
+        streakDays: 0
     };
 
-    prs = [
-        { exercise: 'Squat', weight: 140, unit: 'kg', date: new Date(Date.now() - 864000000) },
-        { exercise: 'Bench Press', weight: 100, unit: 'kg', date: new Date(Date.now() - 1728000000) },
-        { exercise: 'Deadlift', weight: 180, unit: 'kg', date: new Date(Date.now() - 432000000) }
-    ];
+    prs: any[] = [];
 
-    constructor() { }
+    constructor(private apiService: ApiService) { }
 
     ngOnInit() {
+        // TODO: Get actual userId from auth service
+        const userId = 'user1';
+
+        this.apiService.getProgressStats(userId).subscribe(stats => {
+            this.stats = stats;
+        });
+
+        this.apiService.getPersonalRecords(userId).subscribe(prs => {
+            this.prs = prs;
+        });
     }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
     selector: 'app-notifications',
@@ -6,19 +7,22 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./notifications.page.scss'],
 })
 export class NotificationsPage implements OnInit {
-    notifications = [
-        { id: 1, title: 'Workout Verified', message: 'Coach John verified your Leg Day workout.', time: new Date(Date.now() - 3600000), read: false, type: 'success' },
-        { id: 2, title: 'New Message', message: 'Coach John sent you a message.', time: new Date(Date.now() - 7200000), read: true, type: 'primary' },
-        { id: 3, title: 'Reminder', message: 'Don\'t forget to log your workout today!', time: new Date(Date.now() - 86400000), read: true, type: 'warning' }
-    ];
+    notifications: any[] = [];
 
-    constructor() { }
+    constructor(private apiService: ApiService) { }
 
     ngOnInit() {
+        // TODO: Get actual userId from auth service
+        const userId = 'user1';
+        this.apiService.getNotifications(userId).subscribe(notifications => {
+            this.notifications = notifications;
+        });
     }
 
     markAsRead(id: number) {
-        const notif = this.notifications.find(n => n.id === id);
-        if (notif) notif.read = true;
+        this.apiService.markNotificationAsRead(id).subscribe(() => {
+            const notif = this.notifications.find(n => n.id === id);
+            if (notif) notif.read = true;
+        });
     }
 }

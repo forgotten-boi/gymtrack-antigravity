@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
   selector: 'app-athlete-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, LoadingComponent],
   templateUrl: './athlete-list.component.html',
   styleUrls: ['./athlete-list.component.css']
 })
@@ -14,18 +17,31 @@ export class AthleteListComponent implements OnInit {
   athletes: any[] = [];
   filteredAthletes: any[] = [];
   searchTerm: string = '';
+  isLoading = true;
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    // Mock data
-    this.athletes = [
-      { id: '1', name: 'Sarah Conner', status: 'Active', lastWorkout: new Date(Date.now() - 86400000), avatar: 'SC' },
-      { id: '2', name: 'John Doe', status: 'Active', lastWorkout: new Date(Date.now() - 172800000), avatar: 'JD' },
-      { id: '3', name: 'Jane Smith', status: 'Inactive', lastWorkout: new Date(Date.now() - 604800000), avatar: 'JS' },
-      { id: '4', name: 'Mike Tyson', status: 'Active', lastWorkout: new Date(), avatar: 'MT' }
-    ];
-    this.filteredAthletes = this.athletes;
+    // TODO: Get tenantId from auth service
+    const tenantId = 'tenant1';
+    this.isLoading = true;
+    this.apiService.getAthletes(tenantId).subscribe({
+      next: (athletes) => {
+        this.athletes = athletes.map(a => ({
+          id: a.id,
+          name: `${a.firstName} ${a.lastName}`,
+          status: 'Active', // Default status for now
+          lastWorkout: new Date(), // Placeholder
+          avatar: `${a.firstName[0]}${a.lastName[0]}`
+        }));
+        this.filteredAthletes = this.athletes;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load athletes', err);
+        this.isLoading = false;
+      }
+    });
   }
 
   filterAthletes() {

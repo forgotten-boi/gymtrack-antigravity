@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ApiService, Workout } from './api.service';
+import { ApiService, Workout, ProgressStats, PersonalRecord, AppNotification } from './api.service';
 
 @Injectable()
 export class RealApiService extends ApiService {
@@ -38,4 +38,12 @@ export class RealApiService extends ApiService {
             headers: this.getHeaders()
         });
     }
+
+    verifyWorkout(id: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/api/workouts/${id}/verify`, {}, {
+            headers: this.getHeaders()
+        });
+    }
+
+}
 }

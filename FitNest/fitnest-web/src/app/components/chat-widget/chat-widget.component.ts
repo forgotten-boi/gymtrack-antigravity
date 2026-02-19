@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-chat-widget',
@@ -17,28 +18,31 @@ export class ChatWidgetComponent implements OnInit {
   newMessage = '';
   messages: any[] = [];
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    // Mock messages
-    this.messages = [
-      { sender: 'athlete', content: 'Hi Coach, I finished my workout.', time: new Date(Date.now() - 3600000) },
-      { sender: 'coach', content: 'Great job! How did the squats feel?', time: new Date(Date.now() - 1800000) }
-    ];
+    this.chatService.messages$.subscribe(messages => {
+      // Filter messages for the current athlete if needed
+      // For now, we'll just show all messages from the service
+      // In a real app, you'd filter by conversation ID or sender/recipient
+      this.messages = messages;
+    });
+
+    this.chatService.startConnection();
+  }
+
+  ngOnDestroy() {
+    this.chatService.stopConnection();
   }
 
   toggleChat() {
     this.isOpen = !this.isOpen;
   }
 
-  sendMessage() {
-    if (!this.newMessage.trim()) return;
+  async sendMessage() {
+    if (!this.newMessage.trim() || !this.athleteId) return;
 
-    this.messages.push({
-      sender: 'coach',
-      content: this.newMessage,
-      time: new Date()
-    });
+    await this.chatService.sendMessage(this.athleteId, this.newMessage);
     this.newMessage = '';
   }
 }
