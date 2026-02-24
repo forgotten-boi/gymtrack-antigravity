@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
+    standalone: true,
+    imports: [CommonModule, RouterModule],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
@@ -21,9 +25,12 @@ export class DashboardComponent implements OnInit {
         { user: 'Rachel Zane', action: 'completed a workout', time: '2 hours ago', type: 'workout' }
     ];
 
+    userName = '';
+
     constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
+        const user = this.authService.currentUserValue;
+        this.userName = user ? `${user.firstName}` : 'Coach';
     }
-
 }

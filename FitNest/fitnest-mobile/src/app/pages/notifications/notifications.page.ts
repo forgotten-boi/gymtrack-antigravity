@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-notifications',
@@ -9,11 +10,14 @@ import { ApiService } from '../../services/api.service';
 export class NotificationsPage implements OnInit {
     notifications: any[] = [];
 
-    constructor(private apiService: ApiService) { }
+    constructor(
+        private apiService: ApiService,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
-        // TODO: Get actual userId from auth service
-        const userId = 'user1';
+        const user = this.authService.currentUserValue;
+        const userId = user?.id || '1';
         this.apiService.getNotifications(userId).subscribe(notifications => {
             this.notifications = notifications;
         });

@@ -39,11 +39,39 @@ export class RealApiService extends ApiService {
         });
     }
 
-    verifyWorkout(id: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/api/workouts/${id}/verify`, {}, {
+    getProgressStats(userId: string): Observable<ProgressStats> {
+        return this.http.get<ProgressStats>(`${this.apiUrl}/api/users/${userId}/stats`, {
             headers: this.getHeaders()
         });
     }
 
-}
+    getPersonalRecords(userId: string): Observable<PersonalRecord[]> {
+        return this.http.get<PersonalRecord[]>(`${this.apiUrl}/api/users/${userId}/prs`, {
+            headers: this.getHeaders()
+        });
+    }
+
+    getUserProfile(userId: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}/api/users/${userId}`, {
+            headers: this.getHeaders()
+        });
+    }
+
+    updateProfile(userId: string, profile: any): Observable<any> {
+        return this.http.put(`${this.apiUrl}/api/users/${userId}`, profile, {
+            headers: this.getHeaders()
+        });
+    }
+
+    getNotifications(userId: string): Observable<AppNotification[]> {
+        return this.http.get<AppNotification[]>(`${this.apiUrl}/api/users/notifications/${userId}`, {
+            headers: this.getHeaders()
+        });
+    }
+
+    markNotificationAsRead(id: number): Observable<any> {
+        return this.http.post(`${this.apiUrl}/api/users/notifications/${id}/read`, {}, {
+            headers: this.getHeaders()
+        });
+    }
 }

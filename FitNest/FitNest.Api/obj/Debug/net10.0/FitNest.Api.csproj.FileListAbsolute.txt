@@ -20,7 +20,6 @@ C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNes
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\FluentValidation.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
@@ -174,3 +173,7 @@ C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNes
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\System.ClientModel.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\System.IO.Hashing.dll
 C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\System.Memory.Data.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\MyProjects\Dotnet10\AntiGravityGymTracker\gymtrack-antigravity\FitNest\FitNest.Api\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll

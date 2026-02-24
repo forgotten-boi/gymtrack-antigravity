@@ -33,6 +33,7 @@ export abstract class ApiService {
     abstract getWorkouts(userId: string, tenantId: string): Observable<Workout[]>;
     abstract getWorkoutById(id: string): Observable<Workout>;
     abstract verifyWorkout(id: string): Observable<any>;
+    abstract rejectWorkout(id: string, notes: string): Observable<any>;
     abstract getAthletes(tenantId: string): Observable<Athlete[]>;
     abstract getAthlete(id: string): Observable<Athlete>;
     abstract getAthleteHistory(id: string): Observable<Workout[]>;

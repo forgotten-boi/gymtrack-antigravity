@@ -1,27 +1,104 @@
-#container {
-  text-align: center;
+.welcome-section {
+    margin-bottom: 1.5rem;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+    h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 0.25rem;
+    }
+
+    p {
+        color: #718096;
+        margin: 0;
+    }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.guest-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #ebf8ff;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: #2b6cb0;
+
+    ion-icon {
+        font-size: 1.25rem;
+        min-width: 20px;
+    }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+.progress-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 1.25rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
 
-  color: #8c8c8c;
+    .card-content {
+        flex: 1;
 
-  margin: 0;
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem;
+        }
+
+        p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin: 0 0 0.75rem;
+        }
+    }
+
+    ion-icon {
+        font-size: 1.5rem;
+        opacity: 0.8;
+    }
+
+    ion-progress-bar {
+        --background: rgba(255, 255, 255, 0.3);
+        --progress-background: white;
+        border-radius: 4px;
+    }
 }
 
-#container a {
-  text-decoration: none;
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:active {
+        transform: scale(0.97);
+    }
+
+    ion-icon {
+        font-size: 2rem;
+    }
+
+    span {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #4a5568;
+    }
 }

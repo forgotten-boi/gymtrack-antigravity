@@ -1,37 +1,57 @@
-<div class="image-preview" *ngIf="capturedImage">
-    <img [src]="capturedImage" alt="Captured Workout" />
-    <ion-button fill="clear" class="retake-btn" (click)="captureWorkout()">
-        <ion-icon name="refresh-outline" slot="start"></ion-icon>
-        Retake
-    </ion-button>
-</div>
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Capture Workout</ion-title>
+    </ion-toolbar>
+</ion-header>
 
-<!-- Analysis Results -->
-<div class="analysis-results" *ngIf="exercises.length > 0">
-    <h3>Detected Exercises</h3>
+<ion-content class="ion-padding">
+    <div class="capture-section" *ngIf="!capturedImage && exercises.length === 0">
+        <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
+        <h2>Log Your Workout</h2>
+        <p>Take a photo of your workout log and we'll analyze it for you.</p>
+        <ion-button expand="block" (click)="captureWorkout()">
+            <ion-icon name="camera" slot="start"></ion-icon>
+            Take Photo
+        </ion-button>
+    </div>
 
-    <ion-list>
-        <ion-item-sliding *ngFor="let exercise of exercises; let i = index">
-            <ion-item lines="none" class="exercise-item">
-                <ion-label>
-                    <h2>{{ exercise.name }}</h2>
-                    <p>{{ exercise.sets }} sets x {{ exercise.reps }} reps &#64; {{ exercise.weight }}{{
-                        exercise.weightUnit }}</p>
-                </ion-label>
-                <ion-reorder slot="end"></ion-reorder>
-            </ion-item>
+    <div class="image-preview" *ngIf="capturedImage">
+        <img [src]="capturedImage" alt="Captured Workout" />
+        <ion-button fill="clear" class="retake-btn" (click)="captureWorkout()">
+            <ion-icon name="refresh-outline" slot="start"></ion-icon>
+            Retake
+        </ion-button>
+    </div>
 
-            <ion-item-options side="end">
-                <ion-item-option color="danger" (click)="removeExercise(i)">
-                    <ion-icon slot="icon-only" name="trash"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+    <!-- Analysis Results -->
+    <div class="analysis-results" *ngIf="exercises.length > 0">
+        <h3>Detected Exercises</h3>
 
-    <ion-button expand="block" class="save-btn" (click)="saveWorkout()">
-        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-        Save Workout
-    </ion-button>
-</div>
+        <ion-list>
+            <ion-item-sliding *ngFor="let exercise of exercises; let i = index">
+                <ion-item lines="none" class="exercise-item">
+                    <ion-label>
+                        <h2>{{ exercise.name }}</h2>
+                        <p>{{ exercise.sets }} sets x {{ exercise.reps }} reps &#64; {{ exercise.weight }}{{
+                            exercise.weightUnit }}</p>
+                    </ion-label>
+                    <ion-reorder slot="end"></ion-reorder>
+                </ion-item>
+
+                <ion-item-options side="end">
+                    <ion-item-option color="danger" (click)="removeExercise(i)">
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+
+        <ion-button expand="block" class="save-btn" (click)="saveWorkout()">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Save Workout
+        </ion-button>
+    </div>
 </ion-content>

@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\FitNest.Domain.csproj",
+      "projectUniqueName": "c:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\FitNest.Domain.csproj",
       "projectName": "FitNest.Domain",
-      "projectPath": "C:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\FitNest.Domain.csproj",
+      "projectPath": "c:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\FitNest.Domain.csproj",
       "packagesPath": "C:\\Users\\pjha\\.nuget\\packages\\",
-      "outputPath": "C:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\obj\\",
+      "outputPath": "c:\\MyProjects\\Dotnet10\\AntiGravityGymTracker\\gymtrack-antigravity\\FitNest\\FitNest.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -75,7 +75,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

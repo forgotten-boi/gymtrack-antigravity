@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 import { LoadingComponent } from '../../components/loading/loading.component';
 
@@ -21,7 +22,8 @@ export class WorkoutDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -31,8 +33,6 @@ export class WorkoutDetailComponent implements OnInit {
       this.apiService.getWorkoutById(id).subscribe({
         next: (workout) => {
           this.workout = workout;
-          // Map API response to component structure if needed
-          // For now assuming API returns compatible structure or we adjust template
           if (!this.workout.exercises) this.workout.exercises = [];
           if (!this.workout.feedback) this.workout.feedback = [];
           this.isLoading = false;
@@ -54,20 +54,23 @@ export class WorkoutDetailComponent implements OnInit {
   }
 
   rejectWorkout() {
-    // TODO: Implement reject API
-    this.workout.status = 'Rejected';
-    console.log('Workout rejected');
+    if (this.workout && this.workout.id) {
+      this.apiService.rejectWorkout(this.workout.id, 'Rejected by coach').subscribe(() => {
+        this.workout.status = 'Rejected';
+      });
+    }
   }
 
   submitFeedback() {
     if (!this.feedbackContent.trim() || !this.workout || !this.workout.id) return;
 
+    const user = this.authService.currentUserValue;
     this.apiService.submitFeedback(this.workout.id, this.feedbackContent, this.feedbackRating).subscribe(() => {
       this.workout.feedback.push({
         content: this.feedbackContent,
         rating: this.feedbackRating,
         timestamp: new Date(),
-        coachName: 'Coach' // TODO: Get from auth
+        coachName: user ? `${user.firstName} ${user.lastName}` : 'Coach'
       });
       this.feedbackContent = '';
     });

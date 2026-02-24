@@ -42,11 +42,17 @@
         <ion-icon name="logo-google" slot="start"></ion-icon>
         Continue with Google
       </ion-button>
+
+      <ion-button expand="block" fill="clear" class="guest-button" (click)="loginAsGuest()">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        Continue as Guest
+      </ion-button>
     </div>
 
     <!-- Footer -->
     <div class="footer">
       <p>Don't have an account? <a href="#">Sign Up</a></p>
+      <p class="guest-note">Guest mode saves data locally on your device</p>
     </div>
   </div>
 </ion-content>

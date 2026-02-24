@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -11,16 +12,20 @@ import { ToastController } from '@ionic/angular';
 export class ProfilePage implements OnInit {
     user: any = {};
     isEditing = false;
+    isGuest = false;
 
     constructor(
         private authService: AuthService,
         private apiService: ApiService,
-        private toastController: ToastController
+        private toastController: ToastController,
+        private router: Router
     ) { }
 
     ngOnInit() {
-        // TODO: Get actual userId from auth service
-        const userId = 'user1';
+        const currentUser = this.authService.currentUserValue;
+        const userId = currentUser?.id || '1';
+        this.isGuest = this.authService.isGuest();
+
         this.apiService.getUserProfile(userId).subscribe(user => {
             this.user = user;
         });
@@ -29,8 +34,8 @@ export class ProfilePage implements OnInit {
     toggleEdit() {
         this.isEditing = !this.isEditing;
         if (!this.isEditing) {
-            // Reset to original if cancelled
-            const userId = 'user1';
+            const currentUser = this.authService.currentUserValue;
+            const userId = currentUser?.id || '1';
             this.apiService.getUserProfile(userId).subscribe(user => {
                 this.user = user;
             });
@@ -39,12 +44,9 @@ export class ProfilePage implements OnInit {
 
     async saveProfile() {
         try {
-            const userId = 'user1';
+            const currentUser = this.authService.currentUserValue;
+            const userId = currentUser?.id || '1';
             await this.apiService.updateProfile(userId, this.user).toPromise();
-
-            // Update local user state if needed
-            // this.authService.updateUser(this.user);
-
             this.isEditing = false;
             this.showToast('Profile updated successfully');
         } catch (error) {
@@ -64,5 +66,6 @@ export class ProfilePage implements OnInit {
 
     logout() {
         this.authService.logout();
+        this.router.navigate(['/login']);
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-progress',
@@ -15,11 +16,14 @@ export class ProgressPage implements OnInit {
 
     prs: any[] = [];
 
-    constructor(private apiService: ApiService) { }
+    constructor(
+        private apiService: ApiService,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
-        // TODO: Get actual userId from auth service
-        const userId = 'user1';
+        const user = this.authService.currentUserValue;
+        const userId = user?.id || '1';
 
         this.apiService.getProgressStats(userId).subscribe(stats => {
             this.stats = stats;

@@ -66,6 +66,11 @@ export class LoginPage {
         }
     }
 
+    loginAsGuest() {
+        this.authService.loginAsGuest();
+        this.router.navigate(['/home']);
+    }
+
     private async showAlert(header: string, message: string) {
         const alert = await this.alertController.create({
             header,

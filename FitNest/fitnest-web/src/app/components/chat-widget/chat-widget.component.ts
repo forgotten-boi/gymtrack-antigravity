@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../services/chat.service';
@@ -10,7 +10,7 @@ import { ChatService } from '../../services/chat.service';
   templateUrl: './chat-widget.component.html',
   styleUrls: ['./chat-widget.component.css']
 })
-export class ChatWidgetComponent implements OnInit {
+export class ChatWidgetComponent implements OnInit, OnDestroy {
   @Input() athleteId: string = '';
   @Input() athleteName: string = 'Athlete';
 

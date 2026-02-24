@@ -1,6 +1,7 @@
 using FitNest.Application.Common.CQRS;
 using FitNest.Domain.Entities;
 using FitNest.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace FitNest.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ChatController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

@@ -1,11 +1,13 @@
 using FitNest.Application.Common.CQRS;
 using FitNest.Application.Feedback.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitNest.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class FeedbackController : ControllerBase
 {
     private readonly Dispatcher _dispatcher;

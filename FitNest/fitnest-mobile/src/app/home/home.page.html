@@ -1,39 +1,58 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>FitNest Dashboard</ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/notifications">
-        <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-      <ion-button routerLink="/chat">
-        <ion-icon name="chatbubble-ellipses-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-      <ion-button routerLink="/profile">
-        <ion-icon name="person-circle-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>FitNest</ion-title>
+        <ion-buttons slot="end">
+            <ion-button routerLink="/notifications">
+                <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button routerLink="/chat" *ngIf="!isGuest">
+                <ion-icon name="chatbubble-ellipses-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button routerLink="/profile">
+                <ion-icon name="person-circle-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- Progress Summary Card -->
-  <div class="progress-card" routerLink="/progress">
-    <div class="card-content">
-      <h2>Weekly Progress</h2>
-      <p>3/5 Workouts Completed</p>
-      <ion-progress-bar value="0.6"></ion-progress-bar>
+    <div class="welcome-section">
+        <h2>Hey, {{userName}}!</h2>
+        <p>Ready to crush today's workout?</p>
     </div>
-    <ion-icon name="chevron-forward"></ion-icon>
-  </div>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer"
-        href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <div class="guest-banner" *ngIf="isGuest">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>Guest mode - data saved locally. Sign in to sync with your coach.</span>
+    </div>
+
+    <!-- Progress Summary Card -->
+    <div class="progress-card" routerLink="/progress">
+        <div class="card-content">
+            <h3>Weekly Progress</h3>
+            <p>View your stats and personal records</p>
+            <ion-progress-bar value="0.6"></ion-progress-bar>
+        </div>
+        <ion-icon name="chevron-forward"></ion-icon>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <div class="action-card" routerLink="/workout-capture">
+            <ion-icon name="camera-outline" color="primary"></ion-icon>
+            <span>Log Workout</span>
+        </div>
+        <div class="action-card" routerLink="/progress">
+            <ion-icon name="trending-up-outline" color="success"></ion-icon>
+            <span>My Progress</span>
+        </div>
+        <div class="action-card" routerLink="/chat" *ngIf="!isGuest">
+            <ion-icon name="chatbubble-outline" color="tertiary"></ion-icon>
+            <span>Coach Chat</span>
+        </div>
+        <div class="action-card" routerLink="/notifications">
+            <ion-icon name="notifications-outline" color="warning"></ion-icon>
+            <span>Notifications</span>
+        </div>
+    </div>
 </ion-content>

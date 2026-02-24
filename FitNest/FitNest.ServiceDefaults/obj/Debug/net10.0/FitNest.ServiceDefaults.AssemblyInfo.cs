@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FitNest.ServiceDefaults")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dbd924f538b265d78678a9fe7922e74f94eb909")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be119eb9dc38f4aa1ac05beae3ab7be9a52b4bf8")]
 [assembly: System.Reflection.AssemblyProductAttribute("FitNest.ServiceDefaults")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FitNest.ServiceDefaults")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

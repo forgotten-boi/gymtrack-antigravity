@@ -8,6 +8,7 @@ namespace FitNest.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class WorkoutsController : ControllerBase
 {
     private readonly Dispatcher _dispatcher;

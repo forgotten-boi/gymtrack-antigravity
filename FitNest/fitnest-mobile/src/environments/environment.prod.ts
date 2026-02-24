@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  useMocks: false,
   apiUrl: 'https://your-production-api-url.com',
   firebase: {
     apiKey: 'YOUR_FIREBASE_API_KEY',
