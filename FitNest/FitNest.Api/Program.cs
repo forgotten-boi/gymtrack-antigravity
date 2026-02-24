@@ -24,8 +24,16 @@ else
     builder.Services.AddScoped<FitNest.Application.Common.Interfaces.IImageService, FitNest.Infrastructure.Services.Base64ImageService>();
 }
 
-// Enrich the existing DbContext registration with Aspire connection string
-builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
+// Enrich the existing DbContext with Aspire-managed connection string based on provider.
+var dbProvider = builder.Configuration["DatabaseProvider"] ?? "PostgreSQL";
+if (dbProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+{
+    builder.EnrichSqlServerDbContext<ApplicationDbContext>();
+}
+else
+{
+    builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
+}
 
 // CORS
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()

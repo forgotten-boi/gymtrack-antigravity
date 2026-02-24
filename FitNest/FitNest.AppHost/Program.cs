@@ -1,28 +1,58 @@
-var builder = DistributedApplication.CreateBuilder(args);
+﻿var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres")
-    .WithDataVolume()
-    .WithPgAdmin();
+var dbProvider = builder.Configuration["DatabaseProvider"] ?? "PostgreSQL";
 
-var db = postgres.AddDatabase("fitnest-db");
+if (dbProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+{
+    // SQL Server mode: uses a local SQL Server container via Aspire.
+    // For Azure SQL, skip AddSqlServer and set fitnest-db-sqlserver in FitNest.Api/appsettings.json.
+    var sqlServer = builder.AddSqlServer("sqlserver")
+        .WithDataVolume();
 
-// Backend API
-var api = builder.AddProject<Projects.FitNest_Api>("api")
-    .WithReference(db)
-    .WithExternalHttpEndpoints();
+    var db = sqlServer.AddDatabase("fitnest-db-sqlserver");
 
-// Angular Web App
-var web = builder.AddNpmApp("web", "../fitnest-web")
-    .WithReference(api)
-    .WithHttpEndpoint(env: "PORT")
-    .WithExternalHttpEndpoints()
-    .PublishAsDockerFile();
+    var api = builder.AddProject<Projects.FitNest_Api>("api")
+        .WithReference(db)
+        .WithEnvironment("DatabaseProvider", "SqlServer")
+        .WithExternalHttpEndpoints();
 
-// Ionic Mobile App
-var mobile = builder.AddNpmApp("mobile", "../fitnest-mobile")
-    .WithReference(api)
-    .WithHttpEndpoint(env: "PORT")
-    .WithExternalHttpEndpoints()
-    .PublishAsDockerFile();
+    builder.AddNpmApp("web", "../fitnest-web")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT")
+        .WithExternalHttpEndpoints()
+        .PublishAsDockerFile();
+
+    builder.AddNpmApp("mobile", "../fitnest-mobile")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT")
+        .WithExternalHttpEndpoints()
+        .PublishAsDockerFile();
+}
+else
+{
+    // PostgreSQL mode (default): uses PostgreSQL + PgAdmin via Aspire.
+    var postgres = builder.AddPostgres("postgres")
+        .WithDataVolume()
+        .WithPgAdmin();
+
+    var db = postgres.AddDatabase("fitnest-db");
+
+    var api = builder.AddProject<Projects.FitNest_Api>("api")
+        .WithReference(db)
+        .WithEnvironment("DatabaseProvider", "PostgreSQL")
+        .WithExternalHttpEndpoints();
+
+    builder.AddNpmApp("web", "../fitnest-web")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT")
+        .WithExternalHttpEndpoints()
+        .PublishAsDockerFile();
+
+    builder.AddNpmApp("mobile", "../fitnest-mobile")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT")
+        .WithExternalHttpEndpoints()
+        .PublishAsDockerFile();
+}
 
 builder.Build().Run();

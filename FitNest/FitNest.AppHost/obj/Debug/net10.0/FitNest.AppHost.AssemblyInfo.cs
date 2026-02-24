@@ -27,7 +27,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FitNest.AppHost")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be119eb9dc38f4aa1ac05beae3ab7be9a52b4bf8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9aafb7fd3588433fe70962897b4914448d59c6ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("FitNest.AppHost")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FitNest.AppHost")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

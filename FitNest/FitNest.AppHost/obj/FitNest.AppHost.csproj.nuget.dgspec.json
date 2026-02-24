@@ -74,6 +74,10 @@
             "Aspire.Hosting.PostgreSQL": {
               "target": "Package",
               "version": "[13.0.0, )"
+            },
+            "Aspire.Hosting.SqlServer": {
+              "target": "Package",
+              "version": "[9.5.2, )"
             }
           },
           "imports": [

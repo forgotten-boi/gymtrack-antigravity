@@ -19,10 +19,11 @@ FitNest is a comprehensive gym tracking solution connecting athletes with coache
 
 ## Tech Stack
 
-- **Backend**: .NET 9, ASP.NET Core Web API, SignalR, Entity Framework Core, PostgreSQL.
+- **Backend**: .NET 9, ASP.NET Core Web API, SignalR, Entity Framework Core, PostgreSQL or SQL Server.
 - **Mobile**: Ionic 8, Angular 18, Capacitor.
 - **Web**: Angular 18, Standalone Components.
 - **Orchestration**: .NET Aspire.
+- **Database**: Multi-provider support — PostgreSQL (local/Aspire) or SQL Server (local/Aspire or Azure SQL).
 
 ## Getting Started
 
@@ -30,28 +31,51 @@ FitNest is a comprehensive gym tracking solution connecting athletes with coache
 - .NET 9 SDK
 - Node.js 18+
 - Docker Desktop
-- PostgreSQL
+- PostgreSQL or SQL Server (optional — Aspire provides local containers)
 
 ### Running the Project
 
-1. **Start the Backend & Orchestration**:
+1. **Configure Database Provider** (optional):
+   - Edit `FitNest.Api/appsettings.json` and set `DatabaseProvider` to `"PostgreSQL"` (default) or `"SqlServer"`.
+   - For Azure SQL, update the `fitnest-db-sqlserver` connection string with your server details.
+
+2. **Start the Backend & Orchestration**:
    ```bash
    dotnet run --project FitNest.AppHost
    ```
 
-2. **Start the Mobile App**:
+3. **Start the Mobile App**:
    ```bash
    cd fitnest-mobile
    npm install
    npm start
    ```
 
-3. **Start the Web App**:
+4. **Start the Web App**:
    ```bash
    cd fitnest-web
    npm install
    npm start
    ```
+
+## Database Configuration
+
+### PostgreSQL (Default)
+- Runs via Aspire container in development.
+- Connection string in `FitNest.Api/appsettings.json` under `ConnectionStrings.fitnest-db`.
+
+### SQL Server
+1. Set `DatabaseProvider: "SqlServer"` in `FitNest.Api/appsettings.json`.
+2. Either:
+   - Use local Aspire container: Runs automatically when AppHost detects SQL Server provider.
+   - Use Azure SQL: Update `ConnectionStrings.fitnest-db-sqlserver` with connection details.
+
+For migrations targeting SQL Server:
+```powershell
+$env:DatabaseProvider="SqlServer"
+$env:ConnectionStrings__fitnest-db-sqlserver="Your connection string"
+dotnet ef migrations add MyMigration -p FitNest.Infrastructure -s FitNest.Api
+```
 
 ## Project Structure
 
@@ -63,7 +87,8 @@ FitNest is a comprehensive gym tracking solution connecting athletes with coache
 - `fitnest-web`: Angular web dashboard.
 
 ## Recent Updates
-- Added Real-time Chat (SignalR).
-- Implemented Profile Management.
+- Added Multi-Database Support (PostgreSQL and SQL Server).
+- Real-time Chat (SignalR).
+- Profile Management.
 - Enhanced Workout Capture with Date Selection.
-- Added Coach Chat Widget and Athlete Profile View.
+- Coach Chat Widget and Athlete Profile View.

@@ -16,16 +16,35 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("fitnest-db")
-            ?? configuration.GetConnectionString("DefaultConnection");
+        var dbProvider = configuration["DatabaseProvider"] ?? "PostgreSQL";
+
+        var connectionString = dbProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase)
+            ? configuration.GetConnectionString("fitnest-db-sqlserver")
+              ?? configuration.GetConnectionString("DefaultConnection")
+              ?? throw new InvalidOperationException("SQL Server connection string 'fitnest-db-sqlserver' is not configured.")
+            : configuration.GetConnectionString("fitnest-db")
+              ?? configuration.GetConnectionString("DefaultConnection")
+              ?? throw new InvalidOperationException("PostgreSQL connection string 'fitnest-db' is not configured.");
 
         services.AddScoped<Persistence.Interceptors.OutboxInterceptor>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             var interceptor = sp.GetRequiredService<Persistence.Interceptors.OutboxInterceptor>();
-            options.UseNpgsql(connectionString)
-                   .AddInterceptors(interceptor);
+
+            if (dbProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
+            {
+                options.UseSqlServer(connectionString, sqlOptions =>
+                    sqlOptions.MigrationsHistoryTable("__EFMigrationsHistory", "dbo")
+                             .MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
+                       .AddInterceptors(interceptor);
+            }
+            else
+            {
+                options.UseNpgsql(connectionString, npgOptions =>
+                    npgOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
+                       .AddInterceptors(interceptor);
+            }
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

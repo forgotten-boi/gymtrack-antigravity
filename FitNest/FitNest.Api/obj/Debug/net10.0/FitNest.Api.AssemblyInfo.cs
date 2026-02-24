@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FitNest.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4be1ca4219008c40cdd06602b0663f940a8a2211")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9aafb7fd3588433fe70962897b4914448d59c6ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("FitNest.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FitNest.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
