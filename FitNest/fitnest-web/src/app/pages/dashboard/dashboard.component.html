@@ -4,7 +4,7 @@
       <h1>Welcome back, {{userName}}!</h1>
       <p>Here's what's happening with your athletes today.</p>
     </div>
-    <button class="btn-primary">
+    <button class="btn-primary" routerLink="/athletes">
       <i class="fas fa-plus"></i> New Athlete
     </button>
   </header>
@@ -12,13 +12,74 @@
   <!-- Stats Grid -->
   <div class="stats-grid">
     <div class="stat-card" *ngFor="let stat of stats" [class.alert]="stat.alert">
-      <div class="stat-icon">
+      <div class="stat-icon" [style.background]="stat.color + '18'" [style.color]="stat.color">
         <i class="fas fa-{{stat.icon}}"></i>
       </div>
       <div class="stat-info">
         <h3>{{stat.title}}</h3>
         <div class="stat-value">{{stat.value}}</div>
-        <div class="stat-change">{{stat.change}}</div>
+        <div class="stat-change" [class.alert-change]="stat.alert">{{stat.change}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Row -->
+  <div class="analytics-grid">
+    <!-- Weekly Volume Chart -->
+    <div class="card chart-card">
+      <div class="card-header">
+        <h2>Team Volume Trend</h2>
+        <span class="card-subtitle">Last 8 weeks (kg)</span>
+      </div>
+      <div class="chart-container">
+        <div class="chart-bars">
+          <div class="chart-bar-col" *ngFor="let week of weeklyVolume">
+            <div class="bar-tooltip">{{formatVolume(week.value)}} kg</div>
+            <div class="bar-track">
+              <div class="bar-fill" [style.height.%]="getBarHeight(week.value)"></div>
+            </div>
+            <div class="bar-label">{{week.week}}</div>
+          </div>
+        </div>
+        <div class="chart-summary">
+          <div class="chart-total">
+            <span class="total-value">{{formatVolume(weeklyVolume[weeklyVolume.length - 1].value)}}</span>
+            <span class="total-label">This Week</span>
+          </div>
+          <div class="chart-change positive">
+            <i class="fas fa-arrow-up"></i> +40% growth
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Performers -->
+    <div class="card performers-card">
+      <div class="card-header">
+        <h2>Top Performers</h2>
+        <span class="card-subtitle">This week</span>
+      </div>
+      <div class="performers-list">
+        <div class="performer-item" *ngFor="let athlete of topPerformers; let i = index">
+          <div class="performer-rank" [class.gold]="i === 0" [class.silver]="i === 1" [class.bronze]="i === 2">
+            {{i + 1}}
+          </div>
+          <div class="performer-avatar">{{athlete.name.charAt(0)}}</div>
+          <div class="performer-info">
+            <span class="performer-name">{{athlete.name}}</span>
+            <div class="performer-stats">
+              <span>{{athlete.workouts}} workouts</span>
+              <span class="dot">&middot;</span>
+              <span>{{(athlete.volume / 1000).toFixed(1)}}k kg</span>
+            </div>
+          </div>
+          <div class="performer-adherence">
+            <div class="adherence-bar">
+              <div class="adherence-fill" [style.width.%]="athlete.adherence" [style.background]="getAdherenceColor(athlete.adherence)"></div>
+            </div>
+            <span class="adherence-text" [style.color]="getAdherenceColor(athlete.adherence)">{{athlete.adherence}}%</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -28,7 +89,7 @@
     <div class="card activity-card">
       <div class="card-header">
         <h2>Recent Activity</h2>
-        <a href="#" class="view-all">View All</a>
+        <a routerLink="/athletes" class="view-all">View All</a>
       </div>
       <div class="activity-list">
         <div class="activity-item" *ngFor="let item of recentActivity">
@@ -42,6 +103,7 @@
             <i class="fas fa-dumbbell" *ngIf="item.type === 'workout'"></i>
             <i class="fas fa-clipboard-check" *ngIf="item.type === 'checkin'"></i>
             <i class="fas fa-bullseye" *ngIf="item.type === 'goal'"></i>
+            <i class="fas fa-trophy" *ngIf="item.type === 'pr'"></i>
           </div>
         </div>
       </div>
@@ -56,7 +118,7 @@
       <div class="empty-state">
         <i class="fas fa-check-double"></i>
         <p>You have 8 workouts waiting for review.</p>
-        <button class="btn-secondary">Start Reviewing</button>
+        <button class="btn-secondary" routerLink="/athletes">Start Reviewing</button>
       </div>
     </div>
   </div>

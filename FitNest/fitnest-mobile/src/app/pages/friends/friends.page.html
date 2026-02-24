@@ -1,0 +1,155 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Community</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="selectedTab" color="primary">
+            <ion-segment-button value="leaderboard">
+                <ion-icon name="podium-outline"></ion-icon>
+                <ion-label>Leaderboard</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="feed">
+                <ion-icon name="pulse-outline"></ion-icon>
+                <ion-label>Activity</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="friends">
+                <ion-icon name="people-outline"></ion-icon>
+                <ion-label>Friends</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <!-- Guest Banner -->
+    <div class="guest-banner" *ngIf="isGuest">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>Sign in to connect with friends and compete on the leaderboard.</span>
+    </div>
+
+    <!-- Leaderboard Tab -->
+    <div *ngIf="selectedTab === 'leaderboard'">
+        <div class="section-title">
+            <ion-icon name="podium"></ion-icon>
+            <h2>This Week's Leaderboard</h2>
+        </div>
+
+        <div class="leaderboard-list" *ngIf="leaderboard.length > 0">
+            <div class="leaderboard-item" *ngFor="let entry of leaderboard"
+                 [class.top-1]="entry.rank === 1"
+                 [class.top-2]="entry.rank === 2"
+                 [class.top-3]="entry.rank === 3"
+                 [class.is-you]="entry.name === 'You'">
+                <div class="rank-badge" [style.color]="getRankColor(entry.rank)">
+                    <ion-icon [name]="getRankIcon(entry.rank)" *ngIf="entry.rank <= 3"></ion-icon>
+                    <span *ngIf="entry.rank > 3" class="rank-num">#{{entry.rank}}</span>
+                </div>
+                <div class="entry-avatar">
+                    <span>{{entry.name.charAt(0)}}</span>
+                </div>
+                <div class="entry-info">
+                    <span class="entry-name">{{entry.name}}</span>
+                    <span class="entry-detail">{{entry.workoutCount}} workouts</span>
+                </div>
+                <div class="entry-volume">
+                    {{entry.totalVolume | number}} <small>kg</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-state" *ngIf="leaderboard.length === 0">
+            <ion-icon name="podium-outline"></ion-icon>
+            <p>No leaderboard data yet. Add friends to compete!</p>
+        </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div *ngIf="selectedTab === 'feed'">
+        <div class="section-title">
+            <ion-icon name="pulse"></ion-icon>
+            <h2>Activity Feed</h2>
+        </div>
+
+        <div class="feed-list" *ngIf="feed.length > 0">
+            <div class="feed-item" *ngFor="let item of feed">
+                <div class="feed-icon" [attr.data-type]="item.type">
+                    <ion-icon [name]="getActivityIcon(item.type)" [color]="getActivityColor(item.type)"></ion-icon>
+                </div>
+                <div class="feed-content">
+                    <div class="feed-text">
+                        <span class="feed-user">{{item.userName}}</span>
+                        {{item.description}}
+                    </div>
+                    <div class="feed-time">{{timeAgo(item.date)}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-state" *ngIf="feed.length === 0">
+            <ion-icon name="pulse-outline"></ion-icon>
+            <p>No activity yet. Add friends to see their workout progress!</p>
+        </div>
+    </div>
+
+    <!-- Friends Tab -->
+    <div *ngIf="selectedTab === 'friends'">
+        <!-- My Friends -->
+        <div class="section-title">
+            <ion-icon name="people"></ion-icon>
+            <h2>My Friends</h2>
+            <ion-badge color="primary" *ngIf="friends.length > 0">{{friends.length}}</ion-badge>
+        </div>
+
+        <div class="friends-list" *ngIf="friends.length > 0">
+            <ion-item-sliding *ngFor="let friend of friends">
+                <ion-item lines="none" class="friend-item">
+                    <div class="friend-avatar" slot="start">
+                        <span>{{getInitials(friend.firstName, friend.lastName)}}</span>
+                    </div>
+                    <ion-label>
+                        <h2>{{friend.firstName}} {{friend.lastName}}</h2>
+                        <p>{{friend.email}}</p>
+                    </ion-label>
+                    <ion-badge slot="end" color="success">{{friend.workoutsThisWeek}} this week</ion-badge>
+                </ion-item>
+                <ion-item-options side="end">
+                    <ion-item-option color="danger" (click)="removeFriend(friend)">
+                        <ion-icon slot="icon-only" name="person-remove"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+        </div>
+
+        <div class="empty-state" *ngIf="friends.length === 0 && !isGuest">
+            <ion-icon name="people-outline"></ion-icon>
+            <p>No friends yet. Check out the suggestions below!</p>
+        </div>
+
+        <!-- Suggested Friends -->
+        <div *ngIf="suggestedFriends.length > 0">
+            <div class="section-title suggested">
+                <ion-icon name="person-add"></ion-icon>
+                <h2>Suggested</h2>
+            </div>
+            <div class="suggested-list">
+                <div class="suggested-card" *ngFor="let person of suggestedFriends">
+                    <div class="suggested-avatar">
+                        <span>{{getInitials(person.firstName, person.lastName)}}</span>
+                    </div>
+                    <div class="suggested-info">
+                        <h3>{{person.firstName}} {{person.lastName}}</h3>
+                        <p>{{person.workoutsThisWeek}} workouts this week</p>
+                    </div>
+                    <ion-button size="small" fill="outline" (click)="addFriend(person.id)">
+                        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+                        Add
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

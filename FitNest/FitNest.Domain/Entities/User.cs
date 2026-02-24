@@ -23,7 +23,17 @@ public class User : BaseEntity
     public string? ProfileImageUrl { get; set; }
     public string? PhoneNumber { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    
+
+    // Onboarding data
+    public string? FitnessGoals { get; set; } // JSON array: ["weight_loss","muscle_gain",...]
+    public string? ExperienceLevel { get; set; } // beginner, intermediate, advanced
+    public decimal? Height { get; set; } // cm
+    public decimal? CurrentWeight { get; set; } // kg
+    public string? DietaryPreference { get; set; } // standard, vegetarian, vegan, keto, etc.
+    public int? WeeklyFrequency { get; set; } // target workouts per week
+    public bool OnboardingCompleted { get; set; } = false;
+    public int DailyCalorieGoal { get; set; } = 2000;
+
     // For members: assigned coach
     public Guid? AssignedCoachId { get; set; }
     public virtual User? AssignedCoach { get; set; }

@@ -8,35 +8,150 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+    <!-- Stats Summary Cards -->
     <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-value">{{stats.workoutsCompleted}}</div>
-            <div class="stat-label">Workouts</div>
-        </div>
-        <div class="stat-card">
+        <div class="stat-card highlight">
+            <ion-icon [name]="getStreakEmoji()" class="stat-icon fire"></ion-icon>
             <div class="stat-value">{{stats.streakDays}}</div>
             <div class="stat-label">Day Streak</div>
         </div>
+        <div class="stat-card">
+            <ion-icon name="fitness-outline" class="stat-icon blue"></ion-icon>
+            <div class="stat-value">{{stats.workoutsCompleted}}</div>
+            <div class="stat-label">Workouts</div>
+        </div>
         <div class="stat-card full-width">
-            <div class="stat-value">{{stats.totalWeightLifted | number}} kg</div>
-            <div class="stat-label">Total Volume</div>
+            <ion-icon name="barbell-outline" class="stat-icon purple"></ion-icon>
+            <div class="stat-value">{{formatVolume(stats.totalWeightLifted)}} <small>kg</small></div>
+            <div class="stat-label">Total Volume Lifted</div>
         </div>
     </div>
 
-    <div class="section-header">
-        <h2>Personal Records</h2>
+    <!-- Tab Segment -->
+    <ion-segment [(ngModel)]="activeTab" color="primary" class="progress-tabs">
+        <ion-segment-button value="overview">
+            <ion-label>Overview</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="strength">
+            <ion-label>Strength</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="adherence">
+            <ion-label>Adherence</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+    <!-- Overview Tab: Adherence Summary + PRs -->
+    <div *ngIf="activeTab === 'overview'">
+        <!-- Adherence Ring -->
+        <div class="adherence-ring-section" *ngIf="adherence">
+            <h3>Weekly Adherence</h3>
+            <div class="ring-container">
+                <svg viewBox="0 0 120 120" class="adherence-ring">
+                    <circle cx="60" cy="60" r="52" fill="none" stroke="#edf2f7" stroke-width="10"/>
+                    <circle cx="60" cy="60" r="52" fill="none"
+                            [attr.stroke]="adherence.overallAdherence >= 70 ? '#48bb78' : adherence.overallAdherence >= 40 ? '#ed8936' : '#e53e3e'"
+                            stroke-width="10"
+                            stroke-linecap="round"
+                            [attr.stroke-dasharray]="2 * 3.14159 * 52"
+                            [attr.stroke-dashoffset]="2 * 3.14159 * 52 * (1 - adherence.overallAdherence / 100)"
+                            transform="rotate(-90 60 60)"/>
+                    <text x="60" y="55" text-anchor="middle" class="ring-value">{{adherence.overallAdherence}}%</text>
+                    <text x="60" y="72" text-anchor="middle" class="ring-label">adherence</text>
+                </svg>
+            </div>
+            <p class="adherence-target">Target: {{adherence.targetPerWeek}}x per week</p>
+        </div>
+
+        <!-- Quick PR List -->
+        <div class="section-header">
+            <h2>Personal Records</h2>
+        </div>
+
+        <div class="pr-list-mini" *ngIf="prs.length > 0">
+            <div class="pr-item" *ngFor="let pr of prs; let i = index">
+                <div class="pr-info">
+                    <ion-icon name="trophy" [style.color]="getPrBarColor(i)"></ion-icon>
+                    <span class="pr-name">{{pr.exercise}}</span>
+                </div>
+                <div class="pr-bar-wrapper">
+                    <div class="pr-bar" [style.width.%]="getPrBarWidth(pr.weight)" [style.background]="getPrBarColor(i)"></div>
+                </div>
+                <span class="pr-value">{{pr.weight}} <small>{{pr.unit}}</small></span>
+            </div>
+        </div>
+
+        <div class="empty-state" *ngIf="prs.length === 0">
+            <ion-icon name="trophy-outline"></ion-icon>
+            <p>No personal records yet. Start logging workouts!</p>
+        </div>
     </div>
 
-    <ion-list class="pr-list">
-        <ion-item *ngFor="let pr of prs" lines="none">
-            <ion-icon name="trophy" slot="start" color="warning"></ion-icon>
-            <ion-label>
-                <h3>{{pr.exercise}}</h3>
-                <p>{{pr.date | date:'mediumDate'}}</p>
-            </ion-label>
-            <div class="pr-weight">
-                {{pr.weight}} <small>{{pr.unit}}</small>
+    <!-- Strength Tab: Detailed PR Cards -->
+    <div *ngIf="activeTab === 'strength'">
+        <div class="section-header">
+            <h2>Strength Progress</h2>
+            <p class="section-sub">Your best lifts across all exercises</p>
+        </div>
+
+        <div class="pr-card-list">
+            <div class="pr-card" *ngFor="let pr of prs; let i = index">
+                <div class="pr-card-icon" [style.background]="getPrBarColor(i) + '20'">
+                    <ion-icon name="trophy" [style.color]="getPrBarColor(i)"></ion-icon>
+                </div>
+                <div class="pr-card-content">
+                    <h4>{{pr.exercise}}</h4>
+                    <p class="pr-date">{{pr.date | date:'mediumDate'}}</p>
+                </div>
+                <div class="pr-card-weight">
+                    <span class="weight-num">{{pr.weight}}</span>
+                    <span class="weight-unit">{{pr.unit}}</span>
+                </div>
             </div>
-        </ion-item>
-    </ion-list>
+        </div>
+
+        <div class="empty-state" *ngIf="prs.length === 0">
+            <ion-icon name="barbell-outline"></ion-icon>
+            <p>Complete some workouts to see your strength progress!</p>
+        </div>
+    </div>
+
+    <!-- Adherence Tab: Weekly Chart -->
+    <div *ngIf="activeTab === 'adherence'">
+        <div class="section-header">
+            <h2>Workout Adherence</h2>
+            <p class="section-sub">Workouts per week over the last 8 weeks</p>
+        </div>
+
+        <div class="adherence-chart" *ngIf="adherence && adherence.weeklyAdherence.length > 0">
+            <div class="chart-bars">
+                <div class="chart-bar-col" *ngFor="let week of adherence.weeklyAdherence">
+                    <div class="bar-value">{{week.workoutCount}}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill"
+                             [style.height.%]="getAdherenceBarHeight(week.adherencePercent)"
+                             [style.background]="getAdherenceBarColor(week.adherencePercent)">
+                        </div>
+                    </div>
+                    <div class="bar-label">{{getWeekLabel(week.weekStart)}}</div>
+                </div>
+            </div>
+            <div class="chart-target-line">
+                <span>Target: {{adherence.targetPerWeek}}/week</span>
+            </div>
+        </div>
+
+        <!-- Adherence Stats -->
+        <div class="adherence-stats" *ngIf="adherence">
+            <div class="adh-stat">
+                <div class="adh-stat-value" [style.color]="adherence.overallAdherence >= 70 ? '#48bb78' : '#ed8936'">
+                    {{adherence.overallAdherence}}%
+                </div>
+                <div class="adh-stat-label">Overall Adherence</div>
+            </div>
+            <div class="adh-stat">
+                <div class="adh-stat-value">{{adherence.targetPerWeek}}</div>
+                <div class="adh-stat-label">Weekly Target</div>
+            </div>
+        </div>
+    </div>
 </ion-content>

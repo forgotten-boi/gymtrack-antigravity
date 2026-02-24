@@ -1,0 +1,143 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="header-title">
+                <ion-icon name="sparkles" color="primary"></ion-icon>
+                AI Coach
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="chat-content">
+
+    <!-- Guest Banner -->
+    <div class="guest-banner" *ngIf="isGuest">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>Sign in for personalized AI coaching based on your workout data.</span>
+    </div>
+
+    <!-- Empty State -->
+    <div class="welcome-section" *ngIf="messages.length === 0 && !isLoading">
+        <div class="ai-avatar">
+            <ion-icon name="sparkles"></ion-icon>
+        </div>
+        <h2>Your AI Coach</h2>
+        <p>Ask me about workout plans, nutrition, form tips, or track your progress. I learn from your data to give personalized advice.</p>
+
+        <div class="quick-actions">
+            <div class="action-chip" *ngFor="let action of quickActions" (click)="sendQuickAction(action.message)">
+                <ion-icon [name]="action.icon"></ion-icon>
+                <span>{{action.label}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages-container" *ngIf="messages.length > 0">
+        <div *ngFor="let msg of messages" class="message-row" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+
+            <!-- User Message -->
+            <div class="message-bubble user-bubble" *ngIf="msg.role === 'user'">
+                {{msg.content}}
+            </div>
+
+            <!-- AI Text Response -->
+            <div class="message-bubble ai-bubble" *ngIf="msg.role === 'assistant' && !isWorkoutPlan(msg) && !isCalorieCard(msg) && !isProgressCard(msg)">
+                <div class="ai-indicator"><ion-icon name="sparkles"></ion-icon> AI Coach</div>
+                {{msg.content}}
+            </div>
+
+            <!-- Workout Plan Card -->
+            <div class="special-card workout-plan-card" *ngIf="msg.role === 'assistant' && isWorkoutPlan(msg) && parseJson(msg.content) as plan">
+                <div class="card-header">
+                    <ion-icon name="barbell-outline"></ion-icon>
+                    <h3>{{plan.planName}}</h3>
+                </div>
+                <div class="plan-day" *ngFor="let day of plan.days">
+                    <div class="day-header">
+                        <span class="day-name">{{day.day}}</span>
+                        <ion-badge color="primary">{{day.focus}}</ion-badge>
+                    </div>
+                    <ul>
+                        <li *ngFor="let ex of day.exercises">{{ex}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Calorie Card -->
+            <div class="special-card calorie-info-card" *ngIf="msg.role === 'assistant' && isCalorieCard(msg) && parseJson(msg.content) as cal">
+                <div class="card-header">
+                    <ion-icon name="flame-outline"></ion-icon>
+                    <h3>Daily Targets</h3>
+                </div>
+                <div class="calorie-grid">
+                    <div class="cal-item main">
+                        <span class="cal-num">{{cal.dailyCalories}}</span>
+                        <span class="cal-label">kcal/day</span>
+                    </div>
+                    <div class="cal-item"><span class="cal-num">{{cal.protein}}g</span><span class="cal-label">Protein</span></div>
+                    <div class="cal-item"><span class="cal-num">{{cal.carbs}}g</span><span class="cal-label">Carbs</span></div>
+                    <div class="cal-item"><span class="cal-num">{{cal.fat}}g</span><span class="cal-label">Fat</span></div>
+                </div>
+                <p class="card-tip" *ngIf="cal.tip">{{cal.tip}}</p>
+            </div>
+
+            <!-- Progress Card -->
+            <div class="special-card progress-info-card" *ngIf="msg.role === 'assistant' && isProgressCard(msg) && parseJson(msg.content) as prog">
+                <div class="card-header">
+                    <ion-icon name="trending-up-outline"></ion-icon>
+                    <h3>Your Progress</h3>
+                </div>
+                <div class="progress-stats">
+                    <div class="prog-stat">
+                        <span class="prog-num">{{prog.workouts}}</span>
+                        <span class="prog-label">Workouts</span>
+                    </div>
+                    <div class="prog-stat">
+                        <span class="prog-num">{{prog.streak}}</span>
+                        <span class="prog-label">Day Streak</span>
+                    </div>
+                    <div class="prog-stat">
+                        <span class="prog-num">{{prog.volume}}</span>
+                        <span class="prog-label">Volume</span>
+                    </div>
+                </div>
+                <div class="trend-badge" [class.up]="prog.trend === 'up'" [class.down]="prog.trend === 'down'">
+                    <ion-icon [name]="prog.trend === 'up' ? 'trending-up' : 'trending-down'"></ion-icon>
+                    {{prog.message}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="message-row assistant" *ngIf="isLoading">
+            <div class="message-bubble ai-bubble typing">
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Below Messages -->
+    <div class="quick-actions-inline" *ngIf="messages.length > 0 && !isLoading">
+        <ion-chip *ngFor="let action of quickActions" (click)="sendQuickAction(action.message)" outline="true" color="primary">
+            <ion-icon [name]="action.icon"></ion-icon>
+            <ion-label>{{action.label}}</ion-label>
+        </ion-chip>
+    </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <div class="input-bar">
+        <ion-input [(ngModel)]="inputMessage" placeholder="Ask your AI coach..." (keyup.enter)="sendMessage()" class="chat-input"></ion-input>
+        <ion-button fill="clear" (click)="sendMessage()" [disabled]="!inputMessage.trim() || isLoading" class="send-btn">
+            <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+    </div>
+</ion-footer>

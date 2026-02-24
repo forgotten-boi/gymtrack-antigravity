@@ -124,4 +124,65 @@ public class UsersController : ControllerBase
 
         return Ok(prs);
     }
+
+    public record OnboardingRequest(
+        string? FitnessGoals, string? ExperienceLevel, decimal? Height,
+        decimal? CurrentWeight, DateTime? DateOfBirth, string? DietaryPreference,
+        int? WeeklyFrequency, int? DailyCalorieGoal);
+
+    [HttpPost("{id}/onboarding")]
+    public async Task<IActionResult> SaveOnboarding(string id, [FromBody] OnboardingRequest request)
+    {
+        if (!Guid.TryParse(id, out var userId)) return BadRequest();
+
+        var user = await _context.AppUsers.FindAsync(userId);
+        if (user == null) return NotFound();
+
+        user.FitnessGoals = request.FitnessGoals;
+        user.ExperienceLevel = request.ExperienceLevel;
+        user.Height = request.Height;
+        user.CurrentWeight = request.CurrentWeight;
+        user.DateOfBirth = request.DateOfBirth;
+        user.DietaryPreference = request.DietaryPreference;
+        user.WeeklyFrequency = request.WeeklyFrequency;
+        user.DailyCalorieGoal = request.DailyCalorieGoal ?? 2000;
+        user.OnboardingCompleted = true;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Onboarding completed", user.OnboardingCompleted });
+    }
+
+    [HttpGet("{id}/adherence")]
+    public async Task<IActionResult> GetAdherence(string id, [FromQuery] int weeks = 8)
+    {
+        if (!Guid.TryParse(id, out var userId)) return BadRequest();
+
+        var user = await _context.AppUsers.FindAsync(userId);
+        if (user == null) return NotFound();
+
+        var targetPerWeek = user.WeeklyFrequency ?? 4;
+        var startDate = DateTime.UtcNow.Date.AddDays(-weeks * 7);
+
+        var workouts = await _context.Workouts
+            .Where(w => w.UserId == userId && w.WorkoutDate >= startDate)
+            .Select(w => w.WorkoutDate)
+            .ToListAsync();
+
+        var weeklyAdherence = new List<object>();
+        for (int i = 0; i < weeks; i++)
+        {
+            var weekStart = startDate.AddDays(i * 7);
+            var weekEnd = weekStart.AddDays(7);
+            var count = workouts.Count(d => d >= weekStart && d < weekEnd);
+            var pct = targetPerWeek > 0 ? Math.Min(100, (int)(count * 100.0 / targetPerWeek)) : 0;
+            weeklyAdherence.Add(new { WeekStart = weekStart, WorkoutCount = count, Target = targetPerWeek, AdherencePercent = pct });
+        }
+
+        var adherenceValues = weeklyAdherence.Cast<dynamic>().Select(w => (int)w.AdherencePercent).ToList();
+        var overallAdherence = adherenceValues.Count > 0 ? (int)adherenceValues.Average() : 0;
+
+        return Ok(new { overallAdherence, targetPerWeek, weeklyAdherence });
+    }
 }

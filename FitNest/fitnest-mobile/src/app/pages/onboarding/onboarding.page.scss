@@ -1,0 +1,311 @@
+ion-content {
+    --background: #f7f9fc;
+}
+
+.onboarding-progress {
+    padding: 1rem 1.5rem 0;
+    ion-progress-bar {
+        --background: #e2e8f0;
+        --progress-background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 8px;
+        height: 6px;
+    }
+    .step-label {
+        display: block;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #a0aec0;
+        margin-top: 0.5rem;
+        font-weight: 600;
+    }
+}
+
+.step-content {
+    padding: 1.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.step-header {
+    margin-bottom: 1.5rem;
+    h1 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #2d3748;
+        margin: 0 0 0.5rem;
+    }
+    p {
+        color: #718096;
+        font-size: 0.95rem;
+        margin: 0;
+        line-height: 1.5;
+    }
+}
+
+// Goal cards
+.option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.option-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &.selected {
+        border-color: #667eea;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+    }
+
+    &:active { transform: scale(0.97); }
+
+    ion-icon {
+        font-size: 2rem;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+    }
+
+    h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 0.25rem;
+    }
+
+    p {
+        font-size: 0.78rem;
+        color: #a0aec0;
+        margin: 0;
+    }
+}
+
+// Level cards
+.level-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.level-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &.selected { border-color: #667eea; }
+    &:active { transform: scale(0.98); }
+
+    .level-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        ion-icon { font-size: 1.4rem; }
+    }
+
+    .level-info {
+        flex: 1;
+        h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 0.15rem;
+        }
+        p {
+            font-size: 0.82rem;
+            color: #a0aec0;
+            margin: 0;
+        }
+    }
+
+    .check-icon { font-size: 1.5rem; }
+}
+
+// Metrics
+.metrics-section {
+    .metric-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin: 0.25rem 0 0.5rem;
+            small {
+                font-size: 1rem;
+                color: #a0aec0;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+// Diet chips
+.diet-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .diet-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        border-radius: 30px;
+        padding: 0.75rem 1.25rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.08);
+            ion-icon { color: #667eea; }
+        }
+
+        &:active { transform: scale(0.95); }
+
+        ion-icon {
+            font-size: 1.2rem;
+            color: #a0aec0;
+        }
+
+        span {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+// Frequency
+.frequency-section {
+    text-align: center;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1rem;
+
+    .frequency-display {
+        margin-bottom: 1.5rem;
+        .freq-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .freq-label {
+            display: block;
+            color: #a0aec0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    }
+
+    .freq-hints {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0.5rem;
+        margin-top: 0.5rem;
+        span {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+        }
+    }
+}
+
+// Summary
+.summary-card {
+    background: white;
+    border-radius: 16px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+
+    .summary-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #f0f4f8;
+
+        &:last-child { border-bottom: none; }
+
+        &.highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 12px;
+            margin: 0.25rem;
+            border-bottom: none;
+            ion-icon { color: #667eea; }
+            .value { color: #667eea; font-weight: 800; }
+        }
+
+        ion-icon { font-size: 1.2rem; min-width: 24px; }
+
+        .label {
+            flex: 1;
+            font-size: 0.88rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+    }
+}
+
+.continue-btn, .finish-btn {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --border-radius: 14px;
+    height: 52px;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.back-btn {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    --color: #718096;
+    font-weight: 600;
+}

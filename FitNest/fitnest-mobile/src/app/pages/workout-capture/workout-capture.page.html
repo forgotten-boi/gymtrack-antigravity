@@ -3,55 +3,156 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/home"></ion-back-button>
         </ion-buttons>
-        <ion-title>Capture Workout</ion-title>
+        <ion-title>Log Workout</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="mode" color="primary">
+            <ion-segment-button value="photo">
+                <ion-icon name="camera-outline"></ion-icon>
+                <ion-label>Photo AI</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="manual">
+                <ion-icon name="create-outline"></ion-icon>
+                <ion-label>Manual</ion-label>
+            </ion-segment-button>
+        </ion-segment>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-    <div class="capture-section" *ngIf="!capturedImage && exercises.length === 0">
-        <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
-        <h2>Log Your Workout</h2>
-        <p>Take a photo of your workout log and we'll analyze it for you.</p>
-        <ion-button expand="block" (click)="captureWorkout()">
-            <ion-icon name="camera" slot="start"></ion-icon>
-            Take Photo
+
+    <!-- PHOTO MODE -->
+    <div *ngIf="mode === 'photo'">
+        <div class="capture-section" *ngIf="!capturedImage && exercises.length === 0">
+            <div class="capture-icon-wrapper">
+                <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
+            </div>
+            <h2>Snap Your Workout</h2>
+            <p>Take a photo of your workout log or whiteboard and our AI will extract exercises automatically.</p>
+            <ion-button expand="block" shape="round" (click)="captureWorkout()">
+                <ion-icon name="camera" slot="start"></ion-icon>
+                Take Photo
+            </ion-button>
+        </div>
+
+        <div class="image-preview" *ngIf="capturedImage">
+            <img [src]="capturedImage" alt="Captured Workout" />
+            <div class="confidence-badge" *ngIf="confidence > 0">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                {{confidence}}% confidence
+            </div>
+            <ion-button fill="clear" size="small" (click)="captureWorkout()">
+                <ion-icon name="refresh-outline" slot="start"></ion-icon>
+                Retake
+            </ion-button>
+        </div>
+
+        <div class="analysis-results" *ngIf="exercises.length > 0">
+            <h3>Detected Exercises</h3>
+            <ion-list>
+                <ion-item-sliding *ngFor="let exercise of exercises; let i = index">
+                    <ion-item lines="none" class="exercise-item">
+                        <ion-icon name="barbell-outline" slot="start" color="primary"></ion-icon>
+                        <ion-label>
+                            <h2>{{ exercise.name }}</h2>
+                            <p>{{ exercise.sets }} sets x {{ exercise.reps }} reps &#64; {{ exercise.weight }}{{ exercise.weightUnit }}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item-options side="end">
+                        <ion-item-option color="danger" (click)="removeExercise(i)">
+                            <ion-icon slot="icon-only" name="trash"></ion-icon>
+                        </ion-item-option>
+                    </ion-item-options>
+                </ion-item-sliding>
+            </ion-list>
+        </div>
+    </div>
+
+    <!-- MANUAL MODE -->
+    <div *ngIf="mode === 'manual'">
+        <div class="date-picker">
+            <ion-item lines="none">
+                <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+                <ion-label>Workout Date</ion-label>
+                <ion-datetime-button datetime="workoutDatePicker"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                        <ion-datetime id="workoutDatePicker" [(ngModel)]="workoutDate" presentation="date"></ion-datetime>
+                    </ng-template>
+                </ion-modal>
+            </ion-item>
+        </div>
+
+        <div class="manual-exercises" *ngIf="manualExercises.length > 0">
+            <div class="exercise-card" *ngFor="let ex of manualExercises; let i = index">
+                <div class="exercise-header">
+                    <h3>{{ex.name}}</h3>
+                    <ion-button fill="clear" color="danger" size="small" (click)="removeManualExercise(i)">
+                        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </div>
+                <div class="exercise-inputs">
+                    <div class="input-group">
+                        <label>Sets</label>
+                        <div class="stepper">
+                            <ion-button fill="clear" size="small" (click)="ex.sets = Math.max(1, ex.sets - 1)">-</ion-button>
+                            <span>{{ex.sets}}</span>
+                            <ion-button fill="clear" size="small" (click)="ex.sets = ex.sets + 1">+</ion-button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Reps</label>
+                        <div class="stepper">
+                            <ion-button fill="clear" size="small" (click)="ex.reps = Math.max(1, ex.reps - 1)">-</ion-button>
+                            <span>{{ex.reps}}</span>
+                            <ion-button fill="clear" size="small" (click)="ex.reps = ex.reps + 1">+</ion-button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Weight</label>
+                        <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0" class="weight-input"></ion-input>
+                        <ion-segment [(ngModel)]="ex.weightUnit" class="unit-segment">
+                            <ion-segment-button value="kg"><ion-label>kg</ion-label></ion-segment-button>
+                            <ion-segment-button value="lbs"><ion-label>lbs</ion-label></ion-segment-button>
+                        </ion-segment>
+                    </div>
+                    <div class="input-group">
+                        <label>RPE</label>
+                        <ion-range [(ngModel)]="ex.rpe" [min]="1" [max]="10" [pin]="true" [ticks]="true" [snaps]="true" color="primary"></ion-range>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-manual" *ngIf="manualExercises.length === 0 && !showExercisePicker">
+            <ion-icon name="barbell-outline" class="empty-icon"></ion-icon>
+            <h3>No exercises added</h3>
+            <p>Tap the button below to add exercises to your workout.</p>
+        </div>
+
+        <!-- Exercise Picker -->
+        <div class="exercise-picker" *ngIf="showExercisePicker">
+            <h3>Choose Exercise</h3>
+            <div class="exercise-chips">
+                <ion-chip *ngFor="let name of exerciseDatabase" (click)="addManualExercise(name)" color="primary" outline="true">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <ion-label>{{name}}</ion-label>
+                </ion-chip>
+            </div>
+            <ion-button fill="clear" expand="block" (click)="showExercisePicker = false">Cancel</ion-button>
+        </div>
+
+        <ion-button expand="block" fill="outline" (click)="showExercisePicker = true" *ngIf="!showExercisePicker" class="add-exercise-btn">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Add Exercise
         </ion-button>
     </div>
 
-    <div class="image-preview" *ngIf="capturedImage">
-        <img [src]="capturedImage" alt="Captured Workout" />
-        <ion-button fill="clear" class="retake-btn" (click)="captureWorkout()">
-            <ion-icon name="refresh-outline" slot="start"></ion-icon>
-            Retake
-        </ion-button>
-    </div>
-
-    <!-- Analysis Results -->
-    <div class="analysis-results" *ngIf="exercises.length > 0">
-        <h3>Detected Exercises</h3>
-
-        <ion-list>
-            <ion-item-sliding *ngFor="let exercise of exercises; let i = index">
-                <ion-item lines="none" class="exercise-item">
-                    <ion-label>
-                        <h2>{{ exercise.name }}</h2>
-                        <p>{{ exercise.sets }} sets x {{ exercise.reps }} reps &#64; {{ exercise.weight }}{{
-                            exercise.weightUnit }}</p>
-                    </ion-label>
-                    <ion-reorder slot="end"></ion-reorder>
-                </ion-item>
-
-                <ion-item-options side="end">
-                    <ion-item-option color="danger" (click)="removeExercise(i)">
-                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                    </ion-item-option>
-                </ion-item-options>
-            </ion-item-sliding>
-        </ion-list>
-
-        <ion-button expand="block" class="save-btn" (click)="saveWorkout()">
-            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-            Save Workout
-        </ion-button>
-    </div>
+    <!-- Save Button (both modes) -->
+    <ion-button expand="block" shape="round" class="save-btn"
+                (click)="saveWorkout()"
+                *ngIf="(mode === 'photo' && exercises.length > 0) || (mode === 'manual' && manualExercises.length > 0)">
+        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+        Save Workout
+    </ion-button>
 </ion-content>

@@ -106,6 +106,230 @@
   }
 }
 
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.alert-change {
+  color: #e53e3e !important;
+}
+
+// Volume Chart
+.chart-container {
+  padding: 1.5rem;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  height: 180px;
+  padding-bottom: 0.5rem;
+}
+
+.chart-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+
+  &:hover {
+    .bar-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .bar-fill { filter: brightness(1.1); }
+  }
+
+  .bar-tooltip {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #2d3748;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bar-track {
+    flex: 1;
+    width: 100%;
+    max-width: 36px;
+    background: #edf2f7;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    transition: height 0.5s ease-out, filter 0.2s;
+    min-height: 4px;
+  }
+
+  .bar-label {
+    font-size: 0.7rem;
+    color: #a0aec0;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+}
+
+.chart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+
+  .chart-total {
+    display: flex;
+    flex-direction: column;
+
+    .total-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #2d3748;
+    }
+
+    .total-label {
+      font-size: 0.8rem;
+      color: #a0aec0;
+      font-weight: 500;
+    }
+  }
+
+  .chart-change {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+
+    &.positive {
+      color: #48bb78;
+      background: #f0fff4;
+    }
+  }
+}
+
+// Top Performers
+.performers-list {
+  padding: 0.75rem 1.5rem 1.5rem;
+}
+
+.performer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #f7fafc;
+
+  &:last-child { border-bottom: none; }
+
+  .performer-rank {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: #f7fafc;
+    color: #a0aec0;
+
+    &.gold { background: #fffbeb; color: #d69e2e; }
+    &.silver { background: #f7fafc; color: #718096; }
+    &.bronze { background: #fffaf0; color: #c05621; }
+  }
+
+  .performer-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .performer-info {
+    flex: 1;
+
+    .performer-name {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.9rem;
+      display: block;
+    }
+
+    .performer-stats {
+      font-size: 0.75rem;
+      color: #a0aec0;
+
+      .dot { margin: 0 0.25rem; }
+    }
+  }
+
+  .performer-adherence {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px;
+
+    .adherence-bar {
+      flex: 1;
+      height: 6px;
+      background: #edf2f7;
+      border-radius: 3px;
+      overflow: hidden;
+
+      .adherence-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 0.5s ease-out;
+      }
+    }
+
+    .adherence-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 36px;
+      text-align: right;
+    }
+  }
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;

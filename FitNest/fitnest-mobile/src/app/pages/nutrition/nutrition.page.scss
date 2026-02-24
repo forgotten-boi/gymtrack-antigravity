@@ -1,0 +1,268 @@
+ion-content {
+    --background: #f7f9fc;
+}
+
+.date-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.calorie-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+
+    .calorie-ring {
+        .ring-svg {
+            width: 120px;
+            height: 120px;
+        }
+        .ring-num {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+        .ring-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+    }
+
+    .calorie-info {
+        .calorie-remaining {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        .calorie-sub {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+    }
+}
+
+.macro-bars {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+
+    .macro-bar {
+        flex: 1;
+        background: white;
+        border-radius: 12px;
+        padding: 0.75rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+        .macro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            .macro-name {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #718096;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+
+            .macro-value {
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: #2d3748;
+            }
+        }
+
+        .bar-track {
+            height: 6px;
+            background: #edf2f7;
+            border-radius: 3px;
+            overflow: hidden;
+
+            .bar-fill {
+                height: 100%;
+                border-radius: 3px;
+                transition: width 0.4s ease;
+
+                &.protein { background: linear-gradient(90deg, #667eea, #764ba2); }
+                &.carbs { background: linear-gradient(90deg, #48bb78, #38a169); }
+                &.fat { background: linear-gradient(90deg, #ed8936, #dd6b20); }
+            }
+        }
+    }
+}
+
+.quick-add-section {
+    margin-bottom: 1.5rem;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 0.75rem;
+    }
+
+    .quick-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        ion-chip {
+            cursor: pointer;
+            transition: transform 0.15s;
+            &:active { transform: scale(0.95); }
+        }
+    }
+}
+
+.meal-type-section {
+    margin-bottom: 1.5rem;
+
+    .meal-type-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        ion-icon {
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+    }
+}
+
+.meal-list {
+    background: transparent;
+    padding: 0;
+
+    .meal-item {
+        --background: white;
+        --border-radius: 12px;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+        h2 {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+
+        p {
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+
+        ion-badge {
+            --background: #f7f9fc;
+            --color: #4a5568;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+
+    ion-icon {
+        font-size: 3.5rem;
+        color: #cbd5e0;
+        margin-bottom: 0.75rem;
+    }
+
+    h3 {
+        color: #4a5568;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+    }
+
+    p {
+        color: #a0aec0;
+        margin: 0;
+    }
+}
+
+// Add meal bottom sheet
+.add-meal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    display: flex;
+    align-items: flex-end;
+    animation: fadeIn 0.2s ease;
+
+    .add-meal-sheet {
+        width: 100%;
+        background: white;
+        border-radius: 24px 24px 0 0;
+        padding: 1.5rem;
+        animation: slideUp 0.3s ease;
+        max-height: 85vh;
+        overflow-y: auto;
+
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin: 0 auto 1rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin: 0 0 1rem;
+        }
+    }
+}
+
+.form-item {
+    --background: #f7f9fc;
+    --border-radius: 12px;
+    margin-bottom: 0.75rem;
+}
+
+.macro-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+
+    .form-item.small {
+        margin-bottom: 0;
+    }
+}
+
+.save-meal-btn {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --border-radius: 14px;
+    height: 50px;
+    font-weight: 700;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}

@@ -1,0 +1,154 @@
+<ion-content class="ion-no-border">
+    <!-- Progress Bar -->
+    <div class="onboarding-progress">
+        <ion-progress-bar [value]="progressPercent" color="primary"></ion-progress-bar>
+        <span class="step-label">Step {{step}} of {{totalSteps}}</span>
+    </div>
+
+    <!-- Step 1: Fitness Goal -->
+    <div class="step-content" *ngIf="step === 1">
+        <div class="step-header">
+            <h1>What's your goal?</h1>
+            <p>We'll personalize your experience based on your fitness goals.</p>
+        </div>
+        <div class="option-grid">
+            <div class="option-card" *ngFor="let goal of goals"
+                 [class.selected]="data.fitnessGoals === goal.value"
+                 (click)="selectGoal(goal.value)">
+                <ion-icon [name]="goal.icon"></ion-icon>
+                <h3>{{goal.value}}</h3>
+                <p>{{goal.desc}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Experience Level -->
+    <div class="step-content" *ngIf="step === 2">
+        <div class="step-header">
+            <h1>Experience Level</h1>
+            <p>This helps us tailor workout recommendations.</p>
+        </div>
+        <div class="level-cards">
+            <div class="level-card" *ngFor="let level of levels"
+                 [class.selected]="data.experienceLevel === level.value"
+                 (click)="selectLevel(level.value)">
+                <div class="level-icon" [style.background]="level.color + '18'" [style.color]="level.color">
+                    <ion-icon [name]="level.icon"></ion-icon>
+                </div>
+                <div class="level-info">
+                    <h3>{{level.value}}</h3>
+                    <p>{{level.desc}}</p>
+                </div>
+                <ion-icon name="checkmark-circle" class="check-icon" *ngIf="data.experienceLevel === level.value" [style.color]="level.color"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Body Metrics -->
+    <div class="step-content" *ngIf="step === 3">
+        <div class="step-header">
+            <h1>Body Metrics</h1>
+            <p>Used for calorie and progress calculations.</p>
+        </div>
+        <div class="metrics-section">
+            <div class="metric-card">
+                <label>Height</label>
+                <div class="metric-value">{{data.height}} <small>cm</small></div>
+                <ion-range [(ngModel)]="data.height" [min]="140" [max]="220" color="primary" [pin]="true"></ion-range>
+            </div>
+            <div class="metric-card">
+                <label>Current Weight</label>
+                <div class="metric-value">{{data.currentWeight}} <small>kg</small></div>
+                <ion-range [(ngModel)]="data.currentWeight" [min]="40" [max]="200" color="primary" [pin]="true"></ion-range>
+            </div>
+        </div>
+        <ion-button expand="block" shape="round" class="continue-btn" (click)="next()">Continue</ion-button>
+    </div>
+
+    <!-- Step 4: Dietary Preference -->
+    <div class="step-content" *ngIf="step === 4">
+        <div class="step-header">
+            <h1>Dietary Preference</h1>
+            <p>Helps with nutrition tracking and meal suggestions.</p>
+        </div>
+        <div class="diet-chips">
+            <div class="diet-chip" *ngFor="let diet of diets"
+                 [class.selected]="data.dietaryPreference === diet.value"
+                 (click)="selectDiet(diet.value)">
+                <ion-icon [name]="diet.icon"></ion-icon>
+                <span>{{diet.value}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 5: Workout Frequency -->
+    <div class="step-content" *ngIf="step === 5">
+        <div class="step-header">
+            <h1>Weekly Workouts</h1>
+            <p>How many days per week do you plan to train?</p>
+        </div>
+        <div class="frequency-section">
+            <div class="frequency-display">
+                <span class="freq-number">{{data.weeklyFrequency}}</span>
+                <span class="freq-label">days / week</span>
+            </div>
+            <ion-range [(ngModel)]="data.weeklyFrequency" [min]="1" [max]="7" [snaps]="true" [ticks]="true" color="primary" [pin]="true"></ion-range>
+            <div class="freq-hints">
+                <span>1</span>
+                <span>4</span>
+                <span>7</span>
+            </div>
+        </div>
+        <ion-button expand="block" shape="round" class="continue-btn" (click)="next()">Continue</ion-button>
+    </div>
+
+    <!-- Step 6: Preview / Summary -->
+    <div class="step-content" *ngIf="step === 6">
+        <div class="step-header">
+            <h1>You're All Set!</h1>
+            <p>Here's your personalized profile summary.</p>
+        </div>
+        <div class="summary-card">
+            <div class="summary-row">
+                <ion-icon name="flag-outline" color="primary"></ion-icon>
+                <span class="label">Goal</span>
+                <span class="value">{{data.fitnessGoals}}</span>
+            </div>
+            <div class="summary-row">
+                <ion-icon name="fitness-outline" color="primary"></ion-icon>
+                <span class="label">Level</span>
+                <span class="value">{{data.experienceLevel}}</span>
+            </div>
+            <div class="summary-row">
+                <ion-icon name="body-outline" color="primary"></ion-icon>
+                <span class="label">Height / Weight</span>
+                <span class="value">{{data.height}}cm / {{data.currentWeight}}kg</span>
+            </div>
+            <div class="summary-row">
+                <ion-icon name="restaurant-outline" color="primary"></ion-icon>
+                <span class="label">Diet</span>
+                <span class="value">{{data.dietaryPreference || 'No Preference'}}</span>
+            </div>
+            <div class="summary-row">
+                <ion-icon name="calendar-outline" color="primary"></ion-icon>
+                <span class="label">Frequency</span>
+                <span class="value">{{data.weeklyFrequency}}x / week</span>
+            </div>
+            <div class="summary-row highlight">
+                <ion-icon name="flame-outline"></ion-icon>
+                <span class="label">Est. Daily Calories</span>
+                <span class="value">{{getCalorieEstimate()}} kcal</span>
+            </div>
+        </div>
+        <ion-button expand="block" shape="round" class="finish-btn" (click)="finish()">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Start Your Journey
+        </ion-button>
+    </div>
+
+    <!-- Back Button (steps 2+) -->
+    <ion-button fill="clear" class="back-btn" *ngIf="step > 1" (click)="back()">
+        <ion-icon name="arrow-back" slot="start"></ion-icon>
+        Back
+    </ion-button>
+</ion-content>

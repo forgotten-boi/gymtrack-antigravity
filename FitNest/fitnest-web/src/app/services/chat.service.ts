@@ -40,15 +40,23 @@ export class ChatService {
             .build();
 
         this.hubConnection.on('ReceiveMessage', (user: string, message: string) => {
-            // TODO: Determine if message is for this chat session (e.g. specific athlete)
-            // For the coach widget, we might need to handle multiple conversations
-            // For now, we'll just append to the current view if it matches
-
             const newMessage: ChatMessage = {
                 senderId: user,
                 content: message,
                 timestamp: new Date(),
-                isMe: false // Received messages are not from 'me'
+                isMe: false
+            };
+
+            const currentMessages = this.messagesSubject.value;
+            this.messagesSubject.next([...currentMessages, newMessage]);
+        });
+
+        this.hubConnection.on('ReceivePrivateMessage', (senderId: string, message: string) => {
+            const newMessage: ChatMessage = {
+                senderId,
+                content: message,
+                timestamp: new Date(),
+                isMe: false
             };
 
             const currentMessages = this.messagesSubject.value;
@@ -70,8 +78,7 @@ export class ChatService {
             return;
         }
 
-        // Assuming backend has a method to send to a specific user
-        await this.hubConnection.invoke('SendMessageToUser', recipientId, message);
+        await this.hubConnection.invoke('SendPrivateMessage', recipientId, message);
 
         // Optimistically add to local messages
         const newMessage: ChatMessage = {

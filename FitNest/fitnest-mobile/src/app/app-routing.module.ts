@@ -35,6 +35,22 @@ const routes: Routes = [
     path: 'notifications',
     loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
   },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
+  },
+  {
+    path: 'nutrition',
+    loadChildren: () => import('./pages/nutrition/nutrition.module').then(m => m.NutritionPageModule)
+  },
+  {
+    path: 'ai-assistant',
+    loadChildren: () => import('./pages/ai-assistant/ai-assistant.module').then(m => m.AiAssistantPageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./pages/friends/friends.module').then(m => m.FriendsPageModule)
+  },
 ];
 
 @NgModule({

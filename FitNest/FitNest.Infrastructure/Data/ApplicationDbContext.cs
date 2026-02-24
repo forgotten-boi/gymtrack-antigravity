@@ -18,6 +18,9 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     public DbSet<Feedback> Feedbacks { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
+    public DbSet<Meal> Meals { get; set; }
+    public DbSet<Friendship> Friendships { get; set; }
+    public DbSet<AiChatMessage> AiChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -70,6 +73,25 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
         {
             entity.HasIndex(m => m.SenderId);
             entity.HasIndex(m => m.ReceiverId);
+        });
+
+        // Configure Meal
+        builder.Entity<Meal>(entity =>
+        {
+            entity.HasIndex(m => new { m.UserId, m.Date });
+        });
+
+        // Configure Friendship
+        builder.Entity<Friendship>(entity =>
+        {
+            entity.HasIndex(f => f.UserId);
+            entity.HasIndex(f => f.FriendId);
+        });
+
+        // Configure AiChatMessage
+        builder.Entity<AiChatMessage>(entity =>
+        {
+            entity.HasIndex(m => m.UserId);
         });
     }
 }

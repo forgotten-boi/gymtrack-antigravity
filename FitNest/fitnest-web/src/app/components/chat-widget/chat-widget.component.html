@@ -10,9 +10,12 @@
 
     <div class="chat-body" *ngIf="isOpen">
         <div class="messages-list">
-            <div class="message" *ngFor="let msg of messages" [class.coach]="msg.sender === 'coach'">
+            <div class="message" *ngFor="let msg of messages" [class.coach]="msg.isMe">
                 <div class="msg-content">{{msg.content}}</div>
-                <div class="msg-time">{{msg.time | date:'shortTime'}}</div>
+                <div class="msg-time">{{msg.timestamp | date:'shortTime'}}</div>
+            </div>
+            <div class="empty-chat" *ngIf="messages.length === 0">
+                <p>No messages yet. Start the conversation!</p>
             </div>
         </div>
 

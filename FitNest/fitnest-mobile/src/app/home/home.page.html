@@ -1,12 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
     <ion-toolbar>
         <ion-title>FitNest</ion-title>
         <ion-buttons slot="end">
             <ion-button routerLink="/notifications">
                 <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
-            </ion-button>
-            <ion-button routerLink="/chat" *ngIf="!isGuest">
-                <ion-icon name="chatbubble-ellipses-outline" slot="icon-only"></ion-icon>
             </ion-button>
             <ion-button routerLink="/profile">
                 <ion-icon name="person-circle-outline" slot="icon-only"></ion-icon>
@@ -36,23 +33,74 @@
         <ion-icon name="chevron-forward"></ion-icon>
     </div>
 
-    <!-- Quick Actions -->
+    <!-- Primary Actions -->
     <div class="quick-actions">
         <div class="action-card" routerLink="/workout-capture">
             <ion-icon name="camera-outline" color="primary"></ion-icon>
             <span>Log Workout</span>
         </div>
-        <div class="action-card" routerLink="/progress">
-            <ion-icon name="trending-up-outline" color="success"></ion-icon>
-            <span>My Progress</span>
+        <div class="action-card" routerLink="/nutrition">
+            <ion-icon name="nutrition-outline" color="success"></ion-icon>
+            <span>Nutrition</span>
         </div>
-        <div class="action-card" routerLink="/chat" *ngIf="!isGuest">
-            <ion-icon name="chatbubble-outline" color="tertiary"></ion-icon>
-            <span>Coach Chat</span>
+        <div class="action-card" routerLink="/ai-assistant">
+            <ion-icon name="sparkles-outline" color="tertiary"></ion-icon>
+            <span>AI Coach</span>
         </div>
-        <div class="action-card" routerLink="/notifications">
-            <ion-icon name="notifications-outline" color="warning"></ion-icon>
-            <span>Notifications</span>
+        <div class="action-card" routerLink="/friends">
+            <ion-icon name="people-outline" color="warning"></ion-icon>
+            <span>Community</span>
         </div>
     </div>
+
+    <!-- Secondary Quick Links -->
+    <div class="secondary-actions">
+        <ion-item lines="none" class="secondary-item" routerLink="/progress" detail="true">
+            <ion-icon name="trending-up-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+                <h3>Progress & Records</h3>
+                <p>Charts, PRs, and adherence tracking</p>
+            </ion-label>
+        </ion-item>
+        <ion-item lines="none" class="secondary-item" routerLink="/chat" *ngIf="!isGuest" detail="true">
+            <ion-icon name="chatbubble-ellipses-outline" slot="start" color="tertiary"></ion-icon>
+            <ion-label>
+                <h3>Coach Chat</h3>
+                <p>Message your coach directly</p>
+            </ion-label>
+        </ion-item>
+        <ion-item lines="none" class="secondary-item" routerLink="/onboarding" detail="true">
+            <ion-icon name="settings-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+                <h3>Setup / Preferences</h3>
+                <p>Goals, biometrics, diet preferences</p>
+            </ion-label>
+        </ion-item>
+    </div>
 </ion-content>
+
+<!-- Bottom Tab Bar -->
+<ion-footer class="ion-no-border">
+    <div class="tab-bar">
+        <div class="tab-item active" routerLink="/home">
+            <ion-icon name="home"></ion-icon>
+            <span>Home</span>
+        </div>
+        <div class="tab-item" routerLink="/workout-capture">
+            <ion-icon name="barbell-outline"></ion-icon>
+            <span>Workout</span>
+        </div>
+        <div class="tab-item" routerLink="/nutrition">
+            <ion-icon name="nutrition-outline"></ion-icon>
+            <span>Nutrition</span>
+        </div>
+        <div class="tab-item" routerLink="/ai-assistant">
+            <ion-icon name="sparkles-outline"></ion-icon>
+            <span>AI Coach</span>
+        </div>
+        <div class="tab-item" routerLink="/profile">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>Profile</span>
+        </div>
+    </div>
+</ion-footer>

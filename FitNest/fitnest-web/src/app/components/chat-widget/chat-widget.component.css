@@ -122,3 +122,15 @@
         }
     }
 }
+
+.empty-chat {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        color: #a0aec0;
+        font-size: 0.85rem;
+    }
+}

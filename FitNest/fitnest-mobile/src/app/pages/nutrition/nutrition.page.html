@@ -1,0 +1,166 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Nutrition</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="openAddMeal()">
+                <ion-icon name="add-circle" slot="icon-only" color="primary"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <!-- Date Selector -->
+    <div class="date-row">
+        <ion-datetime-button datetime="nutritionDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+                <ion-datetime id="nutritionDate" [value]="selectedDate" presentation="date" (ionChange)="onDateChange($event)"></ion-datetime>
+            </ng-template>
+        </ion-modal>
+    </div>
+
+    <!-- Calorie Ring Card -->
+    <div class="calorie-card">
+        <div class="calorie-ring">
+            <svg viewBox="0 0 120 120" class="ring-svg">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="10"/>
+                <circle cx="60" cy="60" r="52" fill="none" stroke="white" stroke-width="10"
+                        stroke-linecap="round"
+                        [attr.stroke-dasharray]="2 * 3.14159 * 52"
+                        [attr.stroke-dashoffset]="2 * 3.14159 * 52 * (1 - caloriePercent / 100)"
+                        transform="rotate(-90 60 60)"/>
+                <text x="60" y="54" text-anchor="middle" fill="white" class="ring-num">{{nutritionDay.totalCalories}}</text>
+                <text x="60" y="72" text-anchor="middle" fill="rgba(255,255,255,0.8)" class="ring-label">of {{nutritionDay.dailyGoal}}</text>
+            </svg>
+        </div>
+        <div class="calorie-info">
+            <div class="calorie-remaining">{{caloriesRemaining}}</div>
+            <div class="calorie-sub">calories remaining</div>
+        </div>
+    </div>
+
+    <!-- Macro Bars -->
+    <div class="macro-bars">
+        <div class="macro-bar">
+            <div class="macro-header">
+                <span class="macro-name">Protein</span>
+                <span class="macro-value">{{nutritionDay.totalProtein}}g</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill protein" [style.width.%]="proteinPercent"></div>
+            </div>
+        </div>
+        <div class="macro-bar">
+            <div class="macro-header">
+                <span class="macro-name">Carbs</span>
+                <span class="macro-value">{{nutritionDay.totalCarbs}}g</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill carbs" [style.width.%]="carbsPercent"></div>
+            </div>
+        </div>
+        <div class="macro-bar">
+            <div class="macro-header">
+                <span class="macro-name">Fat</span>
+                <span class="macro-value">{{nutritionDay.totalFat}}g</span>
+            </div>
+            <div class="bar-track">
+                <div class="bar-fill fat" [style.width.%]="fatPercent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Buttons -->
+    <div class="quick-add-section">
+        <h3>Quick Add</h3>
+        <div class="quick-chips">
+            <ion-chip (click)="quickAdd('Protein Shake', 280, 35, 20, 8, 'snack')" color="primary" outline="true">
+                <ion-icon name="nutrition-outline"></ion-icon>
+                <ion-label>Protein Shake</ion-label>
+            </ion-chip>
+            <ion-chip (click)="quickAdd('Banana', 105, 1, 27, 0, 'snack')" color="success" outline="true">
+                <ion-icon name="leaf-outline"></ion-icon>
+                <ion-label>Banana</ion-label>
+            </ion-chip>
+            <ion-chip (click)="quickAdd('Coffee', 5, 0, 0, 0, 'snack')" color="warning" outline="true">
+                <ion-icon name="cafe-outline"></ion-icon>
+                <ion-label>Coffee</ion-label>
+            </ion-chip>
+        </div>
+    </div>
+
+    <!-- Meals by Type -->
+    <div *ngFor="let type of mealTypes">
+        <div class="meal-type-section" *ngIf="getMealsByType(type).length > 0">
+            <div class="meal-type-header">
+                <ion-icon [name]="getMealTypeIcon(type)"></ion-icon>
+                <h3>{{type | titlecase}}</h3>
+            </div>
+            <ion-list lines="none" class="meal-list">
+                <ion-item-sliding *ngFor="let meal of getMealsByType(type)">
+                    <ion-item class="meal-item">
+                        <ion-label>
+                            <h2>{{meal.name}}</h2>
+                            <p>P: {{meal.protein}}g &middot; C: {{meal.carbs}}g &middot; F: {{meal.fat}}g</p>
+                        </ion-label>
+                        <ion-badge slot="end" color="light">{{meal.calories}} kcal</ion-badge>
+                    </ion-item>
+                    <ion-item-options side="end">
+                        <ion-item-option color="danger" (click)="deleteMeal(meal)">
+                            <ion-icon slot="icon-only" name="trash"></ion-icon>
+                        </ion-item-option>
+                    </ion-item-options>
+                </ion-item-sliding>
+            </ion-list>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="nutritionDay.meals.length === 0">
+        <ion-icon name="restaurant-outline"></ion-icon>
+        <h3>No meals logged</h3>
+        <p>Tap + to add your first meal for today.</p>
+    </div>
+
+    <!-- Add Meal Modal -->
+    <div class="add-meal-overlay" *ngIf="showAddMeal" (click)="showAddMeal = false">
+        <div class="add-meal-sheet" (click)="$event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h2>Add Meal</h2>
+
+            <ion-item lines="none" class="form-item">
+                <ion-input [(ngModel)]="newMeal.name" placeholder="Meal name" label="Name" labelPlacement="floating"></ion-input>
+            </ion-item>
+
+            <ion-item lines="none" class="form-item">
+                <ion-select [(ngModel)]="newMeal.mealType" label="Type" labelPlacement="floating" interface="popover">
+                    <ion-select-option *ngFor="let type of mealTypes" [value]="type">{{type | titlecase}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <div class="macro-inputs">
+                <ion-item lines="none" class="form-item small">
+                    <ion-input type="number" [(ngModel)]="newMeal.calories" label="Calories" labelPlacement="floating"></ion-input>
+                </ion-item>
+                <ion-item lines="none" class="form-item small">
+                    <ion-input type="number" [(ngModel)]="newMeal.protein" label="Protein (g)" labelPlacement="floating"></ion-input>
+                </ion-item>
+                <ion-item lines="none" class="form-item small">
+                    <ion-input type="number" [(ngModel)]="newMeal.carbs" label="Carbs (g)" labelPlacement="floating"></ion-input>
+                </ion-item>
+                <ion-item lines="none" class="form-item small">
+                    <ion-input type="number" [(ngModel)]="newMeal.fat" label="Fat (g)" labelPlacement="floating"></ion-input>
+                </ion-item>
+            </div>
+
+            <ion-button expand="block" shape="round" class="save-meal-btn" (click)="saveMeal()">
+                <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                Save Meal
+            </ion-button>
+        </div>
+    </div>
+</ion-content>
