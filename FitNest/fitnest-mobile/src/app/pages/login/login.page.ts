@@ -71,6 +71,10 @@ export class LoginPage {
         this.router.navigate(['/home']);
     }
 
+    goToSignup() {
+        this.router.navigate(['/signup']);
+    }
+
     private async showAlert(header: string, message: string) {
         const alert = await this.alertController.create({
             header,

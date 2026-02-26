@@ -12,10 +12,9 @@ import { ApiService } from './services/api.service';
 import { MockApiService } from './services/mock-api.service';
 import { RealApiService } from './services/real-api.service';
 import { GuestApiService } from './services/guest-api.service';
-import { AuthService } from './services/auth.service';
 import { environment } from '../environments/environment';
 
-export function apiServiceFactory(http: HttpClient, authService: AuthService) {
+export function apiServiceFactory(http: HttpClient) {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
         const user = JSON.parse(storedUser);
@@ -39,7 +38,7 @@ export function apiServiceFactory(http: HttpClient, authService: AuthService) {
         {
             provide: ApiService,
             useFactory: apiServiceFactory,
-            deps: [HttpClient, AuthService]
+            deps: [HttpClient]
         }
     ],
     bootstrap: [AppComponent],

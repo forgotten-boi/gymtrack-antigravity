@@ -23,6 +23,11 @@ interface AuthResponse {
     role: string;
 }
 
+export interface Tenant {
+    id: string;
+    name: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -108,6 +113,66 @@ export class AuthService {
         localStorage.setItem('auth_token', 'mock-token');
         this.currentUserSubject.next(mockUser);
         return true;
+    }
+
+    async signUp(
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        role: string,
+        tenantId?: string
+    ): Promise<boolean> {
+        if (environment.useMocks) {
+            return this.mockEmailLogin(email, password);
+        }
+
+        try {
+            const body: any = { firstName, lastName, email, password, role };
+            if (tenantId) body.tenantId = tenantId;
+
+            const response = await this.http.post<AuthResponse>(
+                `${environment.apiUrl}/api/auth/register`,
+                body
+            ).toPromise();
+
+            if (response) {
+                const user: User = {
+                    id: response.id,
+                    email: response.email,
+                    firstName: response.firstName,
+                    lastName: response.lastName,
+                    tenantId: response.tenantId,
+                    role: response.role,
+                    isGuest: false
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('auth_token', response.token);
+                this.currentUserSubject.next(user);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Sign up error:', error);
+            throw error;
+        }
+    }
+
+    async getTenants(): Promise<Tenant[]> {
+        if (environment.useMocks) {
+            return [{ id: '1', name: 'Demo Gym' }];
+        }
+
+        try {
+            const tenants = await this.http.get<Tenant[]>(
+                `${environment.apiUrl}/api/auth/tenants`
+            ).toPromise();
+            return tenants || [];
+        } catch (error) {
+            console.error('Get tenants error:', error);
+            return [];
+        }
     }
 
     loginAsGuest(): void {

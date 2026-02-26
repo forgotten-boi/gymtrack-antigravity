@@ -1,0 +1,116 @@
+<ion-content class="signup-content">
+  <div class="signup-container">
+    <!-- Logo/Header -->
+    <div class="header">
+      <ion-icon name="fitness" class="logo-icon"></ion-icon>
+      <h1>FitNest</h1>
+      <p class="subtitle">Create Your Account</p>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div class="signup-form">
+      <div class="name-row">
+        <ion-item lines="none" class="input-item half">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-input
+            type="text"
+            placeholder="First Name"
+            [(ngModel)]="firstName"
+            autocomplete="given-name"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item half">
+          <ion-input
+            type="text"
+            placeholder="Last Name"
+            [(ngModel)]="lastName"
+            autocomplete="family-name"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          autocomplete="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          autocomplete="new-password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          type="password"
+          placeholder="Confirm Password"
+          [(ngModel)]="confirmPassword"
+          autocomplete="new-password"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Role Selection -->
+      <div class="role-section">
+        <p class="section-label">I am a...</p>
+        <div class="role-buttons">
+          <ion-button
+            [fill]="role === 'Member' ? 'solid' : 'outline'"
+            class="role-btn"
+            (click)="role = 'Member'"
+          >
+            <ion-icon name="barbell-outline" slot="start"></ion-icon>
+            Member
+          </ion-button>
+          <ion-button
+            [fill]="role === 'Coach' ? 'solid' : 'outline'"
+            class="role-btn"
+            (click)="role = 'Coach'"
+          >
+            <ion-icon name="ribbon-outline" slot="start"></ion-icon>
+            Coach
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Gym Selection (Members only) -->
+      <div *ngIf="role === 'Member'" class="gym-section">
+        <ion-item lines="none" class="input-item">
+          <ion-icon name="business-outline" slot="start"></ion-icon>
+          <ion-select
+            placeholder="Select a Gym"
+            [(ngModel)]="selectedTenantId"
+            interface="action-sheet"
+          >
+            <ion-select-option *ngFor="let tenant of tenants" [value]="tenant.id">
+              {{ tenant.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <p *ngIf="tenants.length === 0" class="no-gyms-note">
+          No gyms available. Ask your coach to create an account first.
+        </p>
+      </div>
+
+      <ion-button expand="block" class="signup-button" (click)="signUp()">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        Create Account
+      </ion-button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Already have an account? <a (click)="goToLogin()">Sign In</a></p>
+    </div>
+  </div>
+</ion-content>
