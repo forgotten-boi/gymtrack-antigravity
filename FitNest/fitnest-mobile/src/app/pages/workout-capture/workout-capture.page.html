@@ -110,7 +110,9 @@
                     </div>
                     <div class="input-group">
                         <label>Weight</label>
-                        <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0" class="weight-input"></ion-input>
+                        <ion-item lines="none" class="weight-item">
+                            <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0"></ion-input>
+                        </ion-item>
                         <ion-segment [(ngModel)]="ex.weightUnit" class="unit-segment">
                             <ion-segment-button value="kg"><ion-label>kg</ion-label></ion-segment-button>
                             <ion-segment-button value="lbs"><ion-label>lbs</ion-label></ion-segment-button>
@@ -156,3 +158,7 @@
         Save Workout
     </ion-button>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+    <app-tab-bar></app-tab-bar>
+</ion-footer>

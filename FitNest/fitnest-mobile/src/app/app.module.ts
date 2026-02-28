@@ -15,6 +15,10 @@ import { GuestApiService } from './services/guest-api.service';
 import { environment } from '../environments/environment';
 
 export function apiServiceFactory(http: HttpClient) {
+    if (environment.useMocks) {
+        return new MockApiService();
+    }
+
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
         const user = JSON.parse(storedUser);
@@ -23,11 +27,7 @@ export function apiServiceFactory(http: HttpClient) {
         }
     }
 
-    if (environment.useMocks) {
-        return new MockApiService();
-    } else {
-        return new RealApiService(http);
-    }
+    return new RealApiService(http);
 }
 
 @NgModule({

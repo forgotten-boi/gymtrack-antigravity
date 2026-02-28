@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { WorkoutCapturePage } from './workout-capture.page';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedComponentsModule } from '../../components/shared-components.module';
 
 const routes: Routes = [
     {
@@ -17,7 +18,8 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        SharedComponentsModule
     ],
     declarations: [WorkoutCapturePage]
 })

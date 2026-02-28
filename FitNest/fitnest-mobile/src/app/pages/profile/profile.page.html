@@ -23,18 +23,15 @@
 
     <div class="profile-form">
         <ion-item>
-            <ion-label position="stacked">First Name</ion-label>
-            <ion-input [(ngModel)]="user.firstName" [readonly]="!isEditing"></ion-input>
+            <ion-input [(ngModel)]="user.firstName" [readonly]="!isEditing" label="First Name" labelPlacement="stacked"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="stacked">Last Name</ion-label>
-            <ion-input [(ngModel)]="user.lastName" [readonly]="!isEditing"></ion-input>
+            <ion-input [(ngModel)]="user.lastName" [readonly]="!isEditing" label="Last Name" labelPlacement="stacked"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input [(ngModel)]="user.email" readonly color="medium"></ion-input>
+            <ion-input [(ngModel)]="user.email" readonly color="medium" label="Email" labelPlacement="stacked"></ion-input>
         </ion-item>
     </div>
 
@@ -53,3 +50,7 @@
         </div>
     </div>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+    <app-tab-bar></app-tab-bar>
+</ion-footer>
