@@ -177,6 +177,15 @@ ion-toolbar {
                     }
                 }
 
+                .weight-item {
+                    --background: #f7f9fc;
+                    --border-radius: 8px;
+                    --padding-start: 0.75rem;
+                    --padding-end: 0.75rem;
+                    --min-height: 42px;
+                    margin-bottom: 0.5rem;
+                }
+
                 .weight-input {
                     --background: #f7f9fc;
                     --padding-start: 1rem;

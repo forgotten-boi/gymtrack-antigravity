@@ -46,7 +46,7 @@
             </div>
 
             <!-- AI Text Response -->
-            <div class="message-bubble ai-bubble" *ngIf="msg.role === 'assistant' && !isWorkoutPlan(msg) && !isCalorieCard(msg) && !isProgressCard(msg)">
+            <div class="message-bubble ai-bubble" *ngIf="msg.role === 'assistant' && ((!isWorkoutPlan(msg) && !isCalorieCard(msg) && !isProgressCard(msg)) || !parseJson(msg.content))">
                 <div class="ai-indicator"><ion-icon name="sparkles"></ion-icon> AI Coach</div>
                 {{msg.content}}
             </div>
@@ -140,4 +140,5 @@
             <ion-icon name="send" slot="icon-only"></ion-icon>
         </ion-button>
     </div>
+    <app-tab-bar></app-tab-bar>
 </ion-footer>

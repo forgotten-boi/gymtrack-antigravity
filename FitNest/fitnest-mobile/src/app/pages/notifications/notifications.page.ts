@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
+    standalone: false
 })
 export class NotificationsPage implements OnInit {
     notifications: any[] = [];

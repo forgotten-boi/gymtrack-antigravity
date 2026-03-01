@@ -126,12 +126,26 @@
         <p>Tap + to add your first meal for today.</p>
     </div>
 
-    <!-- Add Meal Modal -->
-    <div class="add-meal-overlay" *ngIf="showAddMeal" (click)="showAddMeal = false">
-        <div class="add-meal-sheet" (click)="$event.stopPropagation()">
-            <div class="sheet-handle"></div>
-            <h2>Add Meal</h2>
+</ion-content>
 
+<ion-footer class="ion-no-border">
+    <app-tab-bar></app-tab-bar>
+</ion-footer>
+
+<!-- Add Meal Modal -->
+<ion-modal [isOpen]="showAddMeal" (didDismiss)="showAddMeal = false" [breakpoints]="[0, 1]" [initialBreakpoint]="1">
+    <ng-template>
+        <ion-header class="ion-no-border">
+            <ion-toolbar>
+                <ion-title>Add Meal</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="showAddMeal = false">
+                        <ion-icon name="close" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
             <ion-item lines="none" class="form-item">
                 <ion-input [(ngModel)]="newMeal.name" placeholder="Meal name" label="Name" labelPlacement="floating"></ion-input>
             </ion-item>
@@ -161,6 +175,6 @@
                 <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
                 Save Meal
             </ion-button>
-        </div>
-    </div>
-</ion-content>
+        </ion-content>
+    </ng-template>
+</ion-modal>
