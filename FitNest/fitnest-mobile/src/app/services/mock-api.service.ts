@@ -29,6 +29,17 @@ export class MockApiService extends ApiService {
         return of({ success: true });
     }
 
+    updateWorkout(id: string, workout: Workout): Observable<any> {
+        const index = this.workouts.findIndex(w => w.id === id);
+        if (index !== -1) this.workouts[index] = { ...workout, id };
+        return of({ success: true });
+    }
+
+    deleteWorkout(id: string): Observable<any> {
+        this.workouts = this.workouts.filter(w => w.id !== id);
+        return of({ success: true });
+    }
+
     getWorkouts(userId: string, tenantId: string): Observable<Workout[]> {
         return of(this.workouts);
     }

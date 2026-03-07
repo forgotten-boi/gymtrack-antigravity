@@ -107,6 +107,8 @@ export interface AdherenceData {
 export abstract class ApiService {
   // Workouts
   abstract createWorkout(workout: Workout): Observable<any>;
+  abstract updateWorkout(id: string, workout: Workout): Observable<any>;
+  abstract deleteWorkout(id: string): Observable<any>;
   abstract getWorkouts(userId: string, tenantId: string): Observable<Workout[]>;
   abstract getWorkoutById(id: string): Observable<Workout>;
   abstract analyzeWorkoutImage(imageBase64: string): Observable<{ exercises: Exercise[]; confidence: number }>;

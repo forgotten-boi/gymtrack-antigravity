@@ -28,6 +28,14 @@ export class RealApiService extends ApiService {
         return this.http.post(`${this.apiUrl}/api/workouts`, workout, { headers: this.getHeaders() });
     }
 
+    updateWorkout(id: string, workout: Workout): Observable<any> {
+        return this.http.put(`${this.apiUrl}/api/workouts/${id}`, workout, { headers: this.getHeaders() });
+    }
+
+    deleteWorkout(id: string): Observable<any> {
+        return this.http.delete(`${this.apiUrl}/api/workouts/${id}`, { headers: this.getHeaders() });
+    }
+
     getWorkouts(userId: string, tenantId: string): Observable<Workout[]> {
         return this.http.get<Workout[]>(`${this.apiUrl}/api/workouts?userId=${userId}&tenantId=${tenantId}`, { headers: this.getHeaders() });
     }

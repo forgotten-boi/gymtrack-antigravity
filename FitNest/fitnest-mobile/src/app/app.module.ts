@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -9,37 +9,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { ApiService } from './services/api.service';
-import { MockApiService } from './services/mock-api.service';
-import { RealApiService } from './services/real-api.service';
-import { GuestApiService } from './services/guest-api.service';
-import { environment } from '../environments/environment';
-
-export function apiServiceFactory(http: HttpClient) {
-    if (environment.useMocks) {
-        return new MockApiService();
-    }
-
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-        const user = JSON.parse(storedUser);
-        if (user.isGuest) {
-            return new GuestApiService();
-        }
-    }
-
-    return new RealApiService(http);
-}
+import { ApiServiceRouter } from './services/api-router.service';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        {
-            provide: ApiService,
-            useFactory: apiServiceFactory,
-            deps: [HttpClient]
-        }
+        // ApiServiceRouter dynamically delegates to Mock / Guest / Real
+        // based on current auth state, so guest mode always uses localStorage
+        // and mock data is only returned when useMocks=true.
+        { provide: ApiService, useExisting: ApiServiceRouter }
     ],
     bootstrap: [AppComponent],
 })

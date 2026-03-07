@@ -1,12 +1,274 @@
-ion-content {
-    --background: #f7f9fc;
+// ═══════════════════════════════════════
+// BASE
+// ═══════════════════════════════════════
+ion-content { --background: #f7f9fc; }
+ion-toolbar { --background: transparent; --color: #333; }
+
+// ═══════════════════════════════════════
+// DATE PICKER CARD
+// ═══════════════════════════════════════
+.section-card {
+    background: white;
+    border-radius: 16px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    .section-label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+
+    .date-item {
+        --background: transparent;
+        --padding-start: 0;
+        --inner-padding-end: 0;
+        --min-height: 36px;
+    }
 }
 
-ion-toolbar {
-    --background: transparent;
-    --color: #333;
+// ═══════════════════════════════════════
+// EXERCISE CARD (shared between manual & edit)
+// ═══════════════════════════════════════
+.exercise-card {
+    background: white;
+    border-radius: 16px;
+    padding: 0.875rem 1rem;
+    margin-bottom: 0.875rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+    .exercise-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #edf2f7;
+
+        ion-icon { flex-shrink: 0; font-size: 1.2rem; }
+
+        .exercise-name-input {
+            flex: 1;
+            --background: transparent;
+            --padding-start: 0;
+            --padding-end: 0;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+    }
+
+    .exercise-inputs {
+        .input-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            label {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #718096;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                display: block;
+                margin-bottom: 0.2rem;
+            }
+
+            &.rpe-group {
+                margin-top: 0.25rem;
+                label { display: flex; align-items: center; gap: 4px; }
+                .rpe-value {
+                    background: #667eea22;
+                    color: #667eea;
+                    font-weight: 700;
+                    padding: 1px 6px;
+                    border-radius: 8px;
+                    font-size: 0.75rem;
+                }
+            }
+
+            &.weight-group {
+                flex: 1 1 auto;
+                min-width: 110px;
+            }
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 2px 4px;
+            justify-content: center;
+            min-width: 80px;
+
+            span {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #2d3748;
+                min-width: 28px;
+                text-align: center;
+            }
+
+            ion-button { --color: #667eea; font-size: 1.4rem; --padding-start: 4px; --padding-end: 4px; }
+        }
+
+        .weight-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .weight-input {
+            --background: #f7f9fc;
+            --border-radius: 10px;
+            --padding-start: 8px;
+            --padding-end: 4px;
+            --min-height: 36px;
+            font-weight: 600;
+            width: 70px;
+            flex-shrink: 0;
+        }
+
+        .unit-toggle {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+
+            button {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: white;
+                color: #a0aec0;
+                border: none;
+                cursor: pointer;
+                transition: all 0.15s;
+
+                &.active {
+                    background: #667eea;
+                    color: white;
+                }
+            }
+        }
+    }
 }
 
+// ═══════════════════════════════════════
+// EMPTY STATE
+// ═══════════════════════════════════════
+.empty-manual {
+    text-align: center;
+    padding: 3rem 1rem;
+
+    .empty-icon { font-size: 4rem; color: #cbd5e0; margin-bottom: 1rem; display: block; }
+    h3 { color: #4a5568; font-weight: 600; margin: 0 0 0.5rem; }
+    p { color: #a0aec0; margin: 0; }
+}
+
+// ═══════════════════════════════════════
+// EXERCISE PICKER
+// ═══════════════════════════════════════
+.exercise-picker {
+    background: white;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+    .custom-exercise-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0.75rem;
+
+        .custom-exercise-input {
+            flex: 1;
+            --background: #f7f9fc;
+            --border-radius: 10px;
+            --padding-start: 12px;
+            --padding-end: 12px;
+            --min-height: 40px;
+            font-size: 0.9rem;
+        }
+
+        ion-button {
+            --background: #667eea;
+            --border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .picker-divider {
+        text-align: center;
+        color: #a0aec0;
+        font-size: 0.78rem;
+        margin: 0.25rem 0 0.75rem;
+    }
+
+    .exercise-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 0.75rem;
+        max-height: 200px;
+        overflow-y: auto;
+
+        ion-chip {
+            cursor: pointer;
+            transition: transform 0.15s;
+            --background: rgba(102,126,234,0.07);
+            font-size: 0.82rem;
+            margin: 0;
+
+            &:active { transform: scale(0.95); }
+        }
+    }
+}
+
+// ═══════════════════════════════════════
+// BUTTONS
+// ═══════════════════════════════════════
+.add-exercise-btn {
+    margin-top: 0.5rem;
+    --border-radius: 12px;
+    --border-color: #667eea;
+    --color: #667eea;
+}
+
+.save-btn {
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --border-radius: 12px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.35);
+}
+
+.delete-btn {
+    margin-top: 0.5rem;
+    --border-radius: 12px;
+    height: 44px;
+}
+
+// ═══════════════════════════════════════
+// PHOTO MODE
+// ═══════════════════════════════════════
 .capture-section {
     text-align: center;
     padding: 2rem 1rem;
@@ -15,30 +277,17 @@ ion-toolbar {
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 1.5rem;
     }
 
-    .camera-icon {
-        font-size: 3rem;
-        color: #667eea;
-    }
+    .camera-icon { font-size: 3rem; color: #667eea; }
 
-    h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #2d3748;
-        margin: 0 0 0.5rem;
-    }
-
-    p {
-        color: #718096;
-        margin: 0 0 1.5rem;
-        line-height: 1.5;
-    }
+    h2 { font-size: 1.5rem; font-weight: 700; color: #2d3748; margin: 0 0 0.5rem; }
+    p { color: #718096; margin: 0 0 1.5rem; line-height: 1.5; }
 
     ion-button {
         --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -53,20 +302,15 @@ ion-toolbar {
     margin-bottom: 1.5rem;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 
-    img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        display: block;
-    }
+    img { width: 100%; height: 250px; object-fit: cover; display: block; }
 
     .confidence-badge {
         position: absolute;
         top: 12px;
         right: 12px;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(0,0,0,0.6);
         color: white;
         padding: 4px 12px;
         border-radius: 20px;
@@ -75,201 +319,146 @@ ion-toolbar {
         align-items: center;
         gap: 4px;
         backdrop-filter: blur(4px);
-
-        ion-icon {
-            color: #48bb78;
-        }
+        ion-icon { color: #48bb78; }
     }
 }
 
 .analysis-results {
-    h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 0.75rem;
-    }
+    h3 { font-size: 1.1rem; font-weight: 700; color: #2d3748; margin-bottom: 0.75rem; }
 
-    ion-list {
-        background: transparent;
-        padding: 0;
-    }
+    ion-list { background: transparent; padding: 0; }
 
     .exercise-item {
         --background: white;
         --border-radius: 12px;
         margin-bottom: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         h2 { font-weight: 600; color: #2d3748; }
         p { color: #718096; font-size: 0.85rem; }
     }
 }
 
-.date-picker {
-    margin-bottom: 1rem;
-
-    ion-item {
-        --background: white;
-        --border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-}
-
-.manual-exercises {
-    .exercise-card {
-        background: white;
+// ═══════════════════════════════════════
+// HISTORY MODE
+// ═══════════════════════════════════════
+.loading-list {
+    .skeleton-card {
+        height: 100px;
         border-radius: 16px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        margin-bottom: 0.875rem;
+        display: block;
+        width: 100%;
+    }
+}
 
-        .exercise-header {
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.history-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+
+    &:active { transform: scale(0.98); box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+
+    .history-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.6rem;
+
+        .history-date {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #edf2f7;
-
-            h3 {
-                font-size: 1rem;
-                font-weight: 700;
-                color: #2d3748;
-                margin: 0;
-            }
+            gap: 5px;
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 0.9rem;
+            ion-icon { color: #667eea; font-size: 0.9rem; }
         }
 
-        .exercise-inputs {
-            .input-group {
-                margin-bottom: 0.75rem;
+        .history-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
 
-                label {
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    color: #718096;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    display: block;
-                    margin-bottom: 0.25rem;
-                }
+            .exercise-count {
+                font-size: 0.78rem;
+                color: #718096;
+                font-weight: 600;
+            }
 
-                .stepper {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    background: #f7f9fc;
-                    border-radius: 8px;
-                    padding: 0.25rem;
-                    justify-content: center;
-
-                    span {
-                        font-size: 1.25rem;
-                        font-weight: 700;
-                        color: #2d3748;
-                        min-width: 2rem;
-                        text-align: center;
-                    }
-
-                    ion-button {
-                        --color: #667eea;
-                        font-size: 1.5rem;
-                    }
-                }
-
-                .weight-item {
-                    --background: #f7f9fc;
-                    --border-radius: 8px;
-                    --padding-start: 0.75rem;
-                    --padding-end: 0.75rem;
-                    --min-height: 42px;
-                    margin-bottom: 0.5rem;
-                }
-
-                .weight-input {
-                    --background: #f7f9fc;
-                    --padding-start: 1rem;
-                    border-radius: 8px;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                }
-
-                .unit-segment {
-                    min-height: 32px;
-
-                    ion-segment-button {
-                        --padding-start: 0.5rem;
-                        --padding-end: 0.5rem;
-                        min-height: 32px;
-                        font-size: 0.8rem;
-                    }
-                }
+            .volume {
+                font-size: 0.75rem;
+                color: #667eea;
+                font-weight: 600;
             }
         }
     }
-}
 
-.empty-manual {
-    text-align: center;
-    padding: 3rem 1rem;
-
-    .empty-icon {
-        font-size: 4rem;
-        color: #cbd5e0;
-        margin-bottom: 1rem;
-    }
-
-    h3 {
-        color: #4a5568;
-        font-weight: 600;
-        margin: 0 0 0.5rem;
-    }
-
-    p {
-        color: #a0aec0;
-        margin: 0;
-    }
-}
-
-.exercise-picker {
-    h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 0.75rem;
-    }
-
-    .exercise-chips {
+    .history-exercises {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        gap: 4px;
+        margin-bottom: 0.6rem;
 
-        ion-chip {
-            cursor: pointer;
-            transition: transform 0.15s;
+        .exercise-tag {
+            background: rgba(102,126,234,0.08);
+            color: #667eea;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
 
-            &:active {
-                transform: scale(0.95);
+            &.more {
+                background: #f7f9fc;
+                color: #a0aec0;
             }
         }
     }
+
+    .history-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .edit-hint {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            ion-icon { font-size: 0.8rem; }
+        }
+
+        .status-badge { font-size: 0.7rem; }
+    }
 }
 
-.add-exercise-btn {
-    margin-top: 1rem;
-    --border-radius: 12px;
-    --border-color: #667eea;
-    --color: #667eea;
-}
+// Edit panel header
+.edit-panel {
+    .edit-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
 
-.save-btn {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --border-radius: 12px;
-    height: 50px;
-    font-weight: 600;
-    font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+    }
+
+    .edit-actions {
+        margin-top: 0.5rem;
+    }
 }

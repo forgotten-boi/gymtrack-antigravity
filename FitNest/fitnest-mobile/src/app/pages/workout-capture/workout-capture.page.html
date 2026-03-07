@@ -6,14 +6,18 @@
         <ion-title>Log Workout</ion-title>
     </ion-toolbar>
     <ion-toolbar>
-        <ion-segment [(ngModel)]="mode" color="primary">
+        <ion-segment [(ngModel)]="mode" color="primary" (ionChange)="onModeChange()">
+            <ion-segment-button value="manual">
+                <ion-icon name="create-outline"></ion-icon>
+                <ion-label>Manual</ion-label>
+            </ion-segment-button>
             <ion-segment-button value="photo">
                 <ion-icon name="camera-outline"></ion-icon>
                 <ion-label>Photo AI</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="manual">
-                <ion-icon name="create-outline"></ion-icon>
-                <ion-label>Manual</ion-label>
+            <ion-segment-button value="history">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>History</ion-label>
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
@@ -21,14 +25,135 @@
 
 <ion-content class="ion-padding">
 
-    <!-- PHOTO MODE -->
+    <!-- ══════════════════════════════════════════
+         MANUAL MODE
+    ══════════════════════════════════════════ -->
+    <div *ngIf="mode === 'manual'">
+
+        <!-- Date picker -->
+        <div class="section-card date-picker-card">
+            <div class="section-label">
+                <ion-icon name="calendar-outline" color="primary"></ion-icon>
+                <span>Workout Date</span>
+            </div>
+            <ion-item lines="none" class="date-item">
+                <ion-datetime-button datetime="workoutDatePicker"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                        <ion-datetime id="workoutDatePicker" [(ngModel)]="workoutDate" presentation="date"></ion-datetime>
+                    </ng-template>
+                </ion-modal>
+            </ion-item>
+        </div>
+
+        <!-- Exercise list -->
+        <div class="manual-exercises" *ngIf="manualExercises.length > 0">
+            <div class="exercise-card" *ngFor="let ex of manualExercises; let i = index">
+                <div class="exercise-header">
+                    <ion-icon name="barbell-outline" color="primary"></ion-icon>
+                    <ion-input class="exercise-name-input"
+                               [(ngModel)]="ex.name"
+                               placeholder="Exercise name"
+                               (click)="$event.stopPropagation()">
+                    </ion-input>
+                    <ion-button fill="clear" color="danger" size="small" (click)="removeManualExercise(i)">
+                        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </div>
+
+                <div class="exercise-inputs">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Sets</label>
+                            <div class="stepper">
+                                <ion-button fill="clear" size="small" (click)="ex.sets = Math.max(1, ex.sets - 1)">-</ion-button>
+                                <span>{{ex.sets}}</span>
+                                <ion-button fill="clear" size="small" (click)="ex.sets = ex.sets + 1">+</ion-button>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Reps</label>
+                            <div class="stepper">
+                                <ion-button fill="clear" size="small" (click)="ex.reps = Math.max(1, ex.reps - 1)">-</ion-button>
+                                <span>{{ex.reps}}</span>
+                                <ion-button fill="clear" size="small" (click)="ex.reps = ex.reps + 1">+</ion-button>
+                            </div>
+                        </div>
+                        <div class="input-group weight-group">
+                            <label>Weight</label>
+                            <div class="weight-row">
+                                <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0" class="weight-input"></ion-input>
+                                <div class="unit-toggle">
+                                    <button [class.active]="ex.weightUnit === 'kg'" (click)="ex.weightUnit = 'kg'">kg</button>
+                                    <button [class.active]="ex.weightUnit === 'lbs'" (click)="ex.weightUnit = 'lbs'">lbs</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group rpe-group">
+                        <label>RPE &nbsp;<span class="rpe-value">{{ex.rpe}}/10</span></label>
+                        <ion-range [(ngModel)]="ex.rpe" [min]="1" [max]="10" [pin]="true" [ticks]="true" [snaps]="true" color="primary"></ion-range>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-manual" *ngIf="manualExercises.length === 0 && !showExercisePicker">
+            <ion-icon name="barbell-outline" class="empty-icon"></ion-icon>
+            <h3>No exercises yet</h3>
+            <p>Tap <strong>Add Exercise</strong> to build your workout.</p>
+        </div>
+
+        <!-- Exercise Picker -->
+        <div class="exercise-picker" *ngIf="showExercisePicker">
+            <!-- Custom name input -->
+            <div class="custom-exercise-row">
+                <ion-input [(ngModel)]="customExerciseName"
+                           placeholder="Type a custom exercise name…"
+                           class="custom-exercise-input"
+                           (keyup.enter)="addCustomExercise()">
+                </ion-input>
+                <ion-button size="small" shape="round" (click)="addCustomExercise()" [disabled]="!customExerciseName.trim()">
+                    <ion-icon name="add" slot="icon-only"></ion-icon>
+                </ion-button>
+            </div>
+
+            <p class="picker-divider">— or choose from list —</p>
+
+            <div class="exercise-chips">
+                <ion-chip *ngFor="let name of exerciseDatabase" (click)="addExerciseFromDatabase(name)" color="primary" outline="true">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <ion-label>{{name}}</ion-label>
+                </ion-chip>
+            </div>
+            <ion-button fill="clear" expand="block" (click)="showExercisePicker = false; customExerciseName = ''">Cancel</ion-button>
+        </div>
+
+        <ion-button expand="block" fill="outline" (click)="showExercisePicker = true" *ngIf="!showExercisePicker" class="add-exercise-btn">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Add Exercise
+        </ion-button>
+
+        <ion-button expand="block" shape="round" class="save-btn"
+                    (click)="saveWorkout()"
+                    *ngIf="manualExercises.length > 0">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Save Workout
+        </ion-button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PHOTO MODE
+    ══════════════════════════════════════════ -->
     <div *ngIf="mode === 'photo'">
         <div class="capture-section" *ngIf="!capturedImage && exercises.length === 0">
             <div class="capture-icon-wrapper">
                 <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
             </div>
             <h2>Snap Your Workout</h2>
-            <p>Take a photo of your workout log or whiteboard and our AI will extract exercises automatically.</p>
+            <p>Take a photo of your workout log or whiteboard and our AI will extract the exercises automatically.</p>
             <ion-button expand="block" shape="round" (click)="captureWorkout()">
                 <ion-icon name="camera" slot="start"></ion-icon>
                 Take Photo
@@ -55,7 +180,9 @@
                         <ion-icon name="barbell-outline" slot="start" color="primary"></ion-icon>
                         <ion-label>
                             <h2>{{ exercise.name }}</h2>
-                            <p>{{ exercise.sets }} sets x {{ exercise.reps }} reps &#64; {{ exercise.weight }}{{ exercise.weightUnit }}</p>
+                            <p>{{ exercise.sets }} sets × {{ exercise.reps }} reps
+                                <span *ngIf="exercise.weight"> &#64; {{ exercise.weight }}{{ exercise.weightUnit }}</span>
+                            </p>
                         </ion-label>
                     </ion-item>
                     <ion-item-options side="end">
@@ -66,97 +193,153 @@
                 </ion-item-sliding>
             </ion-list>
         </div>
+
+        <ion-button expand="block" shape="round" class="save-btn"
+                    (click)="saveWorkout()"
+                    *ngIf="exercises.length > 0">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Save Workout
+        </ion-button>
     </div>
 
-    <!-- MANUAL MODE -->
-    <div *ngIf="mode === 'manual'">
-        <div class="date-picker">
-            <ion-item lines="none">
-                <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
-                <ion-label>Workout Date</ion-label>
-                <ion-datetime-button datetime="workoutDatePicker"></ion-datetime-button>
-                <ion-modal [keepContentsMounted]="true">
-                    <ng-template>
-                        <ion-datetime id="workoutDatePicker" [(ngModel)]="workoutDate" presentation="date"></ion-datetime>
-                    </ng-template>
-                </ion-modal>
-            </ion-item>
+    <!-- ══════════════════════════════════════════
+         HISTORY MODE
+    ══════════════════════════════════════════ -->
+    <div *ngIf="mode === 'history'">
+
+        <!-- Loading skeleton -->
+        <div *ngIf="isLoadingHistory" class="loading-list">
+            <ion-skeleton-text *ngFor="let s of [1,2,3]" animated class="skeleton-card"></ion-skeleton-text>
         </div>
 
-        <div class="manual-exercises" *ngIf="manualExercises.length > 0">
-            <div class="exercise-card" *ngFor="let ex of manualExercises; let i = index">
+        <!-- Empty state -->
+        <div class="empty-manual" *ngIf="!isLoadingHistory && pastWorkouts.length === 0 && !editingWorkout">
+            <ion-icon name="time-outline" class="empty-icon"></ion-icon>
+            <h3>No workouts yet</h3>
+            <p>Your saved workouts will appear here.</p>
+        </div>
+
+        <!-- ─── Edit form ─── -->
+        <div class="edit-panel" *ngIf="editingWorkout">
+            <div class="edit-header">
+                <h3>Edit Workout</h3>
+                <ion-button fill="clear" size="small" (click)="cancelEdit()">
+                    <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+            </div>
+
+            <!-- Date picker -->
+            <div class="section-card date-picker-card">
+                <div class="section-label">
+                    <ion-icon name="calendar-outline" color="primary"></ion-icon>
+                    <span>Date</span>
+                </div>
+                <ion-item lines="none" class="date-item">
+                    <ion-datetime-button datetime="editDatePicker"></ion-datetime-button>
+                    <ion-modal [keepContentsMounted]="true">
+                        <ng-template>
+                            <ion-datetime id="editDatePicker" [(ngModel)]="editingDate" presentation="date"></ion-datetime>
+                        </ng-template>
+                    </ion-modal>
+                </ion-item>
+            </div>
+
+            <!-- Editing exercises -->
+            <div class="exercise-card" *ngFor="let ex of editingExercises; let i = index">
                 <div class="exercise-header">
-                    <h3>{{ex.name}}</h3>
-                    <ion-button fill="clear" color="danger" size="small" (click)="removeManualExercise(i)">
+                    <ion-icon name="barbell-outline" color="primary"></ion-icon>
+                    <ion-input class="exercise-name-input"
+                               [(ngModel)]="ex.name"
+                               placeholder="Exercise name">
+                    </ion-input>
+                    <ion-button fill="clear" color="danger" size="small" (click)="removeEditingExercise(i)">
                         <ion-icon name="close-circle" slot="icon-only"></ion-icon>
                     </ion-button>
                 </div>
+
                 <div class="exercise-inputs">
-                    <div class="input-group">
-                        <label>Sets</label>
-                        <div class="stepper">
-                            <ion-button fill="clear" size="small" (click)="ex.sets = Math.max(1, ex.sets - 1)">-</ion-button>
-                            <span>{{ex.sets}}</span>
-                            <ion-button fill="clear" size="small" (click)="ex.sets = ex.sets + 1">+</ion-button>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Sets</label>
+                            <div class="stepper">
+                                <ion-button fill="clear" size="small" (click)="ex.sets = Math.max(1, ex.sets - 1)">-</ion-button>
+                                <span>{{ex.sets}}</span>
+                                <ion-button fill="clear" size="small" (click)="ex.sets = ex.sets + 1">+</ion-button>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Reps</label>
+                            <div class="stepper">
+                                <ion-button fill="clear" size="small" (click)="ex.reps = Math.max(1, ex.reps - 1)">-</ion-button>
+                                <span>{{ex.reps}}</span>
+                                <ion-button fill="clear" size="small" (click)="ex.reps = ex.reps + 1">+</ion-button>
+                            </div>
+                        </div>
+                        <div class="input-group weight-group">
+                            <label>Weight</label>
+                            <div class="weight-row">
+                                <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0" class="weight-input"></ion-input>
+                                <div class="unit-toggle">
+                                    <button [class.active]="ex.weightUnit === 'kg'" (click)="ex.weightUnit = 'kg'">kg</button>
+                                    <button [class.active]="ex.weightUnit === 'lbs'" (click)="ex.weightUnit = 'lbs'">lbs</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label>Reps</label>
-                        <div class="stepper">
-                            <ion-button fill="clear" size="small" (click)="ex.reps = Math.max(1, ex.reps - 1)">-</ion-button>
-                            <span>{{ex.reps}}</span>
-                            <ion-button fill="clear" size="small" (click)="ex.reps = ex.reps + 1">+</ion-button>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Weight</label>
-                        <ion-item lines="none" class="weight-item">
-                            <ion-input type="number" [(ngModel)]="ex.weight" placeholder="0"></ion-input>
-                        </ion-item>
-                        <ion-segment [(ngModel)]="ex.weightUnit" class="unit-segment">
-                            <ion-segment-button value="kg"><ion-label>kg</ion-label></ion-segment-button>
-                            <ion-segment-button value="lbs"><ion-label>lbs</ion-label></ion-segment-button>
-                        </ion-segment>
-                    </div>
-                    <div class="input-group">
-                        <label>RPE</label>
+                    <div class="input-group rpe-group">
+                        <label>RPE &nbsp;<span class="rpe-value">{{ex.rpe}}/10</span></label>
                         <ion-range [(ngModel)]="ex.rpe" [min]="1" [max]="10" [pin]="true" [ticks]="true" [snaps]="true" color="primary"></ion-range>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="empty-manual" *ngIf="manualExercises.length === 0 && !showExercisePicker">
-            <ion-icon name="barbell-outline" class="empty-icon"></ion-icon>
-            <h3>No exercises added</h3>
-            <p>Tap the button below to add exercises to your workout.</p>
-        </div>
+            <ion-button expand="block" fill="outline" class="add-exercise-btn" (click)="addExerciseToEdit()">
+                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                Add Exercise
+            </ion-button>
 
-        <!-- Exercise Picker -->
-        <div class="exercise-picker" *ngIf="showExercisePicker">
-            <h3>Choose Exercise</h3>
-            <div class="exercise-chips">
-                <ion-chip *ngFor="let name of exerciseDatabase" (click)="addManualExercise(name)" color="primary" outline="true">
-                    <ion-icon name="add-circle-outline"></ion-icon>
-                    <ion-label>{{name}}</ion-label>
-                </ion-chip>
+            <div class="edit-actions">
+                <ion-button expand="block" shape="round" class="save-btn" (click)="saveEditedWorkout()">
+                    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                    Save Changes
+                </ion-button>
+                <ion-button expand="block" fill="outline" color="danger" shape="round" class="delete-btn"
+                            (click)="confirmDeleteWorkout(editingWorkout!)">
+                    <ion-icon name="trash-outline" slot="start"></ion-icon>
+                    Delete Workout
+                </ion-button>
             </div>
-            <ion-button fill="clear" expand="block" (click)="showExercisePicker = false">Cancel</ion-button>
         </div>
 
-        <ion-button expand="block" fill="outline" (click)="showExercisePicker = true" *ngIf="!showExercisePicker" class="add-exercise-btn">
-            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-            Add Exercise
-        </ion-button>
+        <!-- ─── Workout list ─── -->
+        <div class="history-list" *ngIf="!isLoadingHistory && !editingWorkout">
+            <div class="history-card" *ngFor="let w of pastWorkouts" (click)="startEdit(w)">
+                <div class="history-card-header">
+                    <div class="history-date">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        <span>{{ formatDate(w.workoutDate) }}</span>
+                    </div>
+                    <div class="history-meta">
+                        <span class="exercise-count">{{ w.exercises.length }} exercise{{ w.exercises.length !== 1 ? 's' : '' }}</span>
+                        <span class="volume" *ngIf="totalVolume(w) > 0">{{ totalVolume(w) | number:'1.0-0' }} kg total</span>
+                    </div>
+                </div>
+                <div class="history-exercises">
+                    <span class="exercise-tag" *ngFor="let e of w.exercises.slice(0, 4)">{{ e.name }}</span>
+                    <span class="exercise-tag more" *ngIf="w.exercises.length > 4">+{{ w.exercises.length - 4 }} more</span>
+                </div>
+                <div class="history-card-footer">
+                    <span class="edit-hint">
+                        <ion-icon name="pencil-outline"></ion-icon> Tap to edit
+                    </span>
+                    <ion-badge [color]="w.status === 'Verified' ? 'success' : 'warning'" class="status-badge">
+                        {{ w.status }}
+                    </ion-badge>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Save Button (both modes) -->
-    <ion-button expand="block" shape="round" class="save-btn"
-                (click)="saveWorkout()"
-                *ngIf="(mode === 'photo' && exercises.length > 0) || (mode === 'manual' && manualExercises.length > 0)">
-        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-        Save Workout
-    </ion-button>
 </ion-content>
 
 <ion-footer class="ion-no-border">

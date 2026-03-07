@@ -32,6 +32,22 @@ export class GuestApiService extends ApiService {
     }
 
     // Workouts
+    updateWorkout(id: string, workout: Workout): Observable<any> {
+        const workouts = this.getStoredWorkouts();
+        const index = workouts.findIndex(w => w.id === id);
+        if (index !== -1) {
+            workouts[index] = { ...workout, id };
+            this.saveWorkouts(workouts);
+        }
+        return of({ success: true });
+    }
+
+    deleteWorkout(id: string): Observable<any> {
+        const workouts = this.getStoredWorkouts().filter(w => w.id !== id);
+        this.saveWorkouts(workouts);
+        return of({ success: true });
+    }
+
     createWorkout(workout: Workout): Observable<any> {
         const workouts = this.getStoredWorkouts();
         const newWorkout = { ...workout, id: 'local-' + Date.now() };
